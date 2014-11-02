@@ -68,3 +68,7 @@ sudo service mongod stop
 sudo chown -R mongod:mongod /var/lib/mongo/
 
 sudo service mongod restart
+
+# mongo -u arco --authenticationDatabase docker -p
+
+# replace mongo with mongodb as per OS preference
