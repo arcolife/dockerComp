@@ -1,7 +1,7 @@
 dockerComp
 ==========
 
-** Introduction
+**Introduction**
 
 For the purpose of Distributing computing, scientists across the world have been 
 mostly using pre-configured VM images to let the client volunteer in contributing 
@@ -24,7 +24,7 @@ So, just to give you a context of this whole project, take a look at this projec
 help collect CERN's LHC data and perform data analysis on a volunteer's computer or even on
 commercial clouds. Just imagine if the whole process of using VM was dockerized!    
  
-** Features
+**Features**
 
 - Can be used for:
       - Image Processing
@@ -32,7 +32,7 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
       - Scientific Computing
       - CrowdSourcing projects.
 
-** Workflow
+**Workflow**
 
 1. Server
 
@@ -51,7 +51,7 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
    - Scripts for the computation
    - Error Reporting
 
-** References
+**References**
 
 1. https://github.com/cernvm
 2. http://en.wikipedia.org/wiki/List_of_distributed_computing_projects
