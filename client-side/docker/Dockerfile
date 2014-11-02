@@ -1,16 +1,17 @@
 FROM fedora:20
 
-RUN yum update
+# RUN yum -y update
 RUN yum install -y supervisor python-pip git
 RUN \
     cd /tmp && \
-    git clone https://github.com/arcolife/dockerComp.git\
+    git clone https://github.com/arcolife/dockerComp.git && \
     cd dockerComp/client-side
 
 EXPOSE 5000
 EXPOSE 80
 
-RUN python run.py
+# RUN python app.py
 
-# ADD config/supervisord.conf /etc/supervisord.conf
-# CMD ["supervisord","-n"]
+# RUN cd docker
+ADD config/supervisord.conf /etc/supervisord.conf
+CMD ["supervisord","-n"]
