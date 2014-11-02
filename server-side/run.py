@@ -27,11 +27,12 @@ from config import \
 from random import randrange
 
 
-@app.route('/')
+@app.route('/', methods=['GET','POST'])
 def home():
     """
     dockerComp Container Management dashboard
     """
+    print request.headers['Host'], request.method
     return render_template('index.html',
                            **TEMPLATE_CONFIGURATION)
 
@@ -52,7 +53,7 @@ def data_generator():
     temp = []
     for i in xrange(10):
         temp.append((randrange(100),
-                     ))randrange(100)
+                     randrange(100)))
     
 
 def integrity_checker(container_id=None, data=None):
@@ -62,8 +63,8 @@ def integrity_checker(container_id=None, data=None):
     current = Client.objects.get(container_id=container_id)
 
     
-@app.route('/connect/<client_ip>/<container_id>/', methods=['GET','POST'])
-def communicator(container_id=None,container_id=None):
+@app.route('/connect/<client_IP>/<container_id>/', methods=['GET','POST'])
+def communicator(container_id=None, client_IP=None):
     """
     communicates with the client
     """

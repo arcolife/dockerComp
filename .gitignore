@@ -31,5 +31,5 @@ nosetests.xml
 
 venv
 db.sqlite3
-dumps
+dump
 *.db
