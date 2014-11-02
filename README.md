@@ -3,7 +3,7 @@ dockerComp
 
 **Introduction**
 
-For the purpose of Distributing computing, scientists across the world have been 
+For the purpose of Distributed (Scientific) Computing, scientists across the world have been 
 mostly using pre-configured VM images to let the client volunteer in contributing 
 towards micro-processing tasks  that involve processing of raw data received in 
 chunks over the network. 
@@ -15,7 +15,8 @@ overhead of starting up, as compared to Docker containers. Moreover, we don't ev
 to explain the difference between running more than one VM on a HostOS compared to 
 running multiple docker containers on that same machine! See the point? :)
 
-Ref: 
+References: 
+
      - http://www.rightscale.com/blog/sites/default/files/docker-containers-vms.png 
      - http://en.wikipedia.org/wiki/Docker_%28software%29#cite_ref-3
 
@@ -24,6 +25,11 @@ So, just to give you a context of this whole project, take a look at this projec
 help collect CERN's LHC data and perform data analysis on a volunteer's computer or even on
 commercial clouds. Just imagine if the whole process of using VM was dockerized!    
  
+**Aim**
+
+To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
+computing task.
+
 **Features**
 
 - Can be used for:
