@@ -68,3 +68,7 @@ computing task.
 7. http://www.mediaagility.com/2014/docker-the-next-big-thing-on-cloud/
 8. http://cernvm.cern.ch/portal/
 
+**Notes**
+
+- Docker Image: ``` $ docker pull arcolife/docker_comp ```
+- Demo link will be here soon.
