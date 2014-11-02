@@ -1,0 +1,70 @@
+#!/bin/bash
+
+# to install mongo on Red Hat based Linux platforms
+
+sudo echo "[mongodb]
+name=MongoDB Repository
+baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
+gpgcheck=0
+enabled=1" > /etc/yum.repos.d/mongodb.repo
+
+sudo yum install -y mongodb-org
+
+sudo semanage port -a -t mongod_port_t -p tcp 27017
+
+sudo gpasswd -a ${USER} docker
+#sudo usermod -a -G mongod $USER 
+
+sudo service mongod start
+
+sudo grep "waiting for connections on port" /var/log/mongodb/mongod.log 
+
+sudo chkconfig mongod on
+
+# stop mongo now
+sudo service mongod stop
+
+# and run it with:
+# $ sudo mongod --noauth --dbpath=/var/lib/mongo
+
+# in another terminal, run $ mongo ; then
+# add admin user and db, as follows:
+
+# use admin
+# db.createUser(
+#   {
+#     user: "siteUserAdmin",
+#     pwd: "password",
+#     roles:
+#     [
+#       {
+#         role: "userAdminAnyDatabase",
+#         db: "admin"
+#       }
+#     ]
+#   }
+# )
+
+# then run following for a regular db and user, as follows:
+
+# use products
+# db.createUser(
+#   {
+#     user: "recordsUserAdmin",
+#     pwd: "password",
+#     roles:
+#     [
+#       {
+#         role: "userAdmin",
+#         db: "records"
+#       }
+#     ]
+#   }
+# )
+
+# then exit the shell and close the manual mongod server
+
+# then run this to ensure that on restart, mongo doesn't fail
+sudo chown -R mongod:mongod /var/lib/mongo/
+
+sudo service mongod restart
