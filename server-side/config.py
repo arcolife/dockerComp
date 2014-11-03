@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-DEBUG = True
+DEBUG = False #True
 
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))  

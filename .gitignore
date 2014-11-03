@@ -33,3 +33,4 @@ venv
 db.sqlite3
 dump
 *.db
+nohup.out
