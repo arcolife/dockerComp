@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#readonly SERVER_IP=104.131.170.133
 
 user_interrupt(){
     echo -e "\n\nKeyboard Interrupt detected."
@@ -14,15 +15,15 @@ trap user_interrupt SIGTSTP
 initial_steps(){
     # init
     readonly SERVER_IP='104.131.170.133' 
-    echo SERVER_IP > ~/.bashrc
-    export SERVER_D=SERVER_IP
+    echo '104.131.170.133' > ~/.bashrc
+    export SERVER_D='104.131.170.133'
 
     echo "What's your package manager?"
     echo "1. APT"
     echo "2. YUM"
     read opt
     if [ $opt -eq 1 ]; then
-	sudo apt-get install -y git docker-io python-pip
+	sudo apt-get install -y git docker.io python-pip
 	sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
 	sudo sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
 	source /etc/bash_completion.d/docker.io
@@ -45,5 +46,7 @@ setup_app(){
     cd dockerComp/client-side
     ./launch.sh
     ./test.sh
+}
 
-initial_steps()
+initial_steps
+setup_app
