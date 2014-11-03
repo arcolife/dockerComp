@@ -1,15 +1,31 @@
 dockerComp
 ==========
 
-Demo link to be updated soon. In case you're curious how to go about running this from client side,
+- Youtube Video Explaining this project:
+  
+  [![Here's a video for DockerComp](http://img.youtube.com/vi/lIp2nrOnKFs/0.jpg)](http://www.youtube.com/watch?v=lIp2nrOnKFs)
 
-So once the server is up and running, all one has to do is download and run install_me.sh
+- [Click here](http://asciinema.org/a/13557) for Screencast for running just one script on client side. 
 
-Future goal includes making this a pluggable dockerized distributed computing tool, where you just
-have to include a compution task (say, map-reduce) and make it send data to clients. The app should
-be able to handle the rest.
 
-**Introduction**
+**NOTES**
+
+- Demo link to be updated soon. 
+
+- In case you're curious how to go about running this from client side:
+ 
+  - So once the server is up and running, all one has to do is download and run install_me.sh
+
+- Docker Image: ``` $ docker pull arcolife/docker_comp ``` (will be kept updated)
+
+
+**GOAL**
+
+To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
+computing task.
+
+
+**INTRODUCTION**
 
 For the purpose of Distributed (Scientific) Computing, scientists across the world have been 
 mostly using pre-configured VM images to let the client volunteer in contributing 
@@ -33,12 +49,8 @@ So, just to give you a context of this whole project, take a look at this projec
 help collect CERN's LHC data and perform data analysis on a volunteer's computer or even on
 commercial clouds. Just imagine if the whole process of using VM was dockerized!    
  
-**Aim**
 
-To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
-computing task.
-
-**Features**
+**FEATURES**
 
 - Can be used for:
       - Image Processing
@@ -46,7 +58,39 @@ computing task.
       - Scientific Computing
       - CrowdSourcing projects.
 
-**Workflow**
+
+**FUTURE GOALS** 
+
+- Make this a pluggable dockerized distributed computing tool, where you just have to include 
+  a compution task (say, map-reduce) and make it send data to clients. The app should be able 
+  to handle the rest.
+
+- Benchmark results and compare with existing methodologies. 
+
+**STEPS***
+
+Just 1: 
+
+     - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/install_me.sh)
+       and run ```$ ./install_me.sh``` this within a terminal. 
+
+Make sure you're connected to the internet. Cheers! :)
+
+
+**TESTS**
+
+- From client side:
+  - although the default connection establishment test is included with install scripts;
+    run ```$ ./client-side/test.sh```
+
+- From server side:
+  - TBD
+
+- Workloads:
+  - Currently a simple task. TBD.
+
+
+**WORKFLOW**
 
 1. Server
 
@@ -65,7 +109,8 @@ computing task.
    - Scripts for the computation
    - Error Reporting
 
-**References**
+
+**REFERENCES**
 
 1. https://github.com/cernvm
 2. http://en.wikipedia.org/wiki/List_of_distributed_computing_projects
@@ -75,8 +120,3 @@ computing task.
 6. https://okfn.org/press/releases/crowdcrafting-putting-citizens-control-citizen-science/
 7. http://www.mediaagility.com/2014/docker-the-next-big-thing-on-cloud/
 8. http://cernvm.cern.ch/portal/
-
-**Notes**
-
-- Docker Image: ``` $ docker pull arcolife/docker_comp ```
-- Demo link will be here soon.
