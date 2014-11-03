@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Steps to build a docker image
 docker pull fedora:20

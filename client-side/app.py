@@ -1,32 +1,24 @@
 #!/usr/bin/python
 
-import os, sys#, time
-from flask import Flask, jsonify, request, redirect
-#from datetime import datetime
+import json
+import os, sys
+from flask import Flask, jsonify, request
 
 app = Flask(__name__, static_url_path='')
 
-# @app.before_request
-# def before_request():
-#     pass
-
-@app.route('/test/', methods=['GET', 'POST'])
+@app.route('/test/client/', methods=['POST'])
 def test():
-    if request.method == 'POST':
-        resp = 'POST: this is Client.'
-        return Response(resp)
-    else:
-        return Response('GET: this is Client')
+    print request.data
+    return jsonify({'got response from server': 'OK'})
 
 
 @app.route('/tasks/', methods=['POST'])
 def get_tasks():
-    #headers = {'content-type': 'application/json'}
-    data = []
-    return jsonify(data)
-    # return Response(data, status=200, 
-    #                 mimetype='application/json')
-    
+    received = json.load(request.data)
+    result = 0
+    for i in received['data']:
+        result += sum(i)
+    return jsonify(result)
         
 
 if __name__ == '__main__':

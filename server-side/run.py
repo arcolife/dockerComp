@@ -54,7 +54,7 @@ def data_generator():
     for i in xrange(10):
         temp.append((randrange(100),
                      randrange(100)))
-    
+    return temp
 
 def integrity_checker(container_id=None, data=None):
     """
