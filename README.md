@@ -1,6 +1,14 @@
 dockerComp
 ==========
 
+Demo link to be updated soon. In case you're curious how to go about running this from client side,
+
+So once the server is up and running, all one has to do is download and run install_me.sh
+
+Future goal includes making this a pluggable dockerized distributed computing tool, where you just
+have to include a compution task (say, map-reduce) and make it send data to clients. The app should
+be able to handle the rest.
+
 **Introduction**
 
 For the purpose of Distributed (Scientific) Computing, scientists across the world have been 
