@@ -11,6 +11,7 @@ from flask import \
     render_template, \
     Response, \
     json, \
+    jsonify, \
     make_response, \
     request, \
     redirect, \
@@ -72,6 +73,19 @@ def communicator(container_id=None, client_IP=None):
         pass
     elif request.method == 'GET':
         pass
+
+
+@app.route('/test/server/', methods=['POST'])
+def test():
+    print request.data
+    return jsonify({'got response from client': 'OK'})
+
+
+@app.route('/get_details/', methods=['POST'])
+def get_tasks():
+    received = request.data
+    print received
+    return jsonify({'got response from client': 'OK'})
 
 
 if __name__ == '__main__':
