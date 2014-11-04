@@ -15,7 +15,7 @@ trap user_interrupt SIGTSTP
 initial_steps(){
     # init
     readonly SERVER_IP='104.131.170.133' 
-    echo '104.131.170.133' > ~/.bashrc
+    echo "export SERVER_D='104.131.170.133'" >> ~/.bashrc
     export SERVER_D='104.131.170.133'
 
     echo "What's your package manager?"
