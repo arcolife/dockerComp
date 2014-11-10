@@ -1,10 +1,16 @@
 #!/usr/bin/python
 
-import json
+import ast#, json
 import os, sys
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 
 app = Flask(__name__, static_url_path='')
+
+
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({'client_test': 'OK'})
+
 
 @app.route('/test/client/', methods=['POST'])
 def test():
@@ -14,18 +20,19 @@ def test():
 
 @app.route('/tasks/', methods=['POST'])
 def get_tasks():
-    received = json.load(request.data)
+    received = ast.literal_eval(request.data)
+    #print received[0]
     result = 0
-    for i in received['data']:
+    for i in received:
         result += sum(i)
-    return jsonify(result)
-        
+    return Response(str(result))
+
 
 if __name__ == '__main__':
     try:
         app.run(host = '0.0.0.0',
-                port = 5000,
-                debug = True)
+                #port = 5001,
+                debug = False)
     except:
         raise
 

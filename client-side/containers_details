@@ -1,5 +1,5 @@
-CONTAINER ID        IMAGE                         COMMAND             CREATED                  STATUS                  PORTS               NAMES
-72b51703279e        arcolife/docker_comp:latest   "supervisord -n"    Less than a second ago   Up Less than a second   5000/tcp, 80/tcp    insane_albattani       
-21943f3760f4        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 80/tcp    ecstatic_ardinghelli   
-6fa03d9ae2aa        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 80/tcp    cranky_engelbart       
-938fdb2d89bd        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 80/tcp    grave_euclid           
+CONTAINER ID        IMAGE                         COMMAND             CREATED                  STATUS                  PORTS                             NAMES
+eda7b47f921a        arcolife/docker_comp:latest   "supervisord -n"    Less than a second ago   Up Less than a second   5000/tcp, 0.0.0.0:49160->80/tcp   distracted_lalande     
+543e5bd17304        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 0.0.0.0:49159->80/tcp   kickass_wilson         
+80f5b26e1c92        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 0.0.0.0:49158->80/tcp   condescending_hoover   
+e693d0c48411        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up 1 seconds            5000/tcp, 0.0.0.0:49157->80/tcp   hungry_bartik          
