@@ -1,5 +1,0 @@
-CONTAINER ID        IMAGE                         COMMAND             CREATED                  STATUS                  PORTS                             NAMES
-2f6f7bbffc62        arcolife/docker_comp:latest   "supervisord -n"    Less than a second ago   Up Less than a second   5000/tcp, 0.0.0.0:49166->80/tcp   furious_nobel        
-756007c1acd1        arcolife/docker_comp:latest   "supervisord -n"    Less than a second ago   Up Less than a second   5000/tcp, 0.0.0.0:49165->80/tcp   focused_blackwell    
-f317c73fc152        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up Less than a second   5000/tcp, 0.0.0.0:49164->80/tcp   agitated_franklin    
-9550f6c65a11        arcolife/docker_comp:latest   "supervisord -n"    1 seconds ago            Up 1 seconds            5000/tcp, 0.0.0.0:49163->80/tcp   agitated_goldstine   

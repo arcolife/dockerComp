@@ -34,3 +34,5 @@ db.sqlite3
 dump
 *.db
 nohup.out
+container_info.json
+containers_details
