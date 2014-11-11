@@ -106,7 +106,7 @@ def get_tasks():
         temp_client.containers[container_port] = temp_container
         temp_client.save()
         
-    print temp_client.to_json()
+    #print temp_client.to_json()
     print request.host
     return '\n>>>> Server: container metadata received..\n'
 
