@@ -2,14 +2,15 @@ FROM ubuntu:trusty
 MAINTAINER Archit Sharma <archit.py@gmail.com>
 
 RUN apt-get update
-RUN apt-get install -y python python-pip python-dev git
-RUN apt-get install -y nginx supervisor
+RUN apt-get install -y python python-pip python-dev
+RUN apt-get install -y nginx supervisor curl git
 RUN pip install uwsgi Flask
 
 RUN \
     cd /tmp && \
     git clone https://github.com/arcolife/dockerComp.git && \
-    cd dockerComp/client-side
+    cd dockerComp/client-side && \
+    ./test.sh
 
 ADD ./app /docker/app
 ADD ./conf /docker/conf
