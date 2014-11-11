@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-DEBUG = True
+DEBUG = False
 
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))  
@@ -18,4 +18,4 @@ TEMPLATE_CONFIGURATION = {
 
 HOST = "0.0.0.0"
 
-PORT = 5000
+PORT = 80

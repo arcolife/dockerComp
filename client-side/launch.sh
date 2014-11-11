@@ -14,4 +14,4 @@ docker ps > containers_details
 cd scripts/
 python read_container_details.py
 cd ..
-curl -H "Content-type: application/json" -X POST http://104.131.170.133:5000/get_details/ -d @container_info.json
+curl -H "Content-type: application/json" -X POST http://104.131.170.133/get_details/ -d @container_info.json
