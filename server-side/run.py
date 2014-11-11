@@ -84,12 +84,14 @@ def test():
 @app.route('/get_details/', methods=['POST'])
 def get_tasks():
     received = json.loads(request.data)
-    ip_addr = netaddr.IPAddress(request.environ['REMOTE_ADDR']).value
+    ip_addr = request.environ['REMOTE_ADDR']
+    ip_addr_num = netaddr.IPAddress(ip_addr).value
     
     try:
         temp_client = Client.objects.get(ip_addr=ip_addr)
     except:
-        temp_client = Client(ip_addr=ip_addr)
+        temp_client = Client(ip_addr=ip_addr,
+                             ip_addr_num=ip_addr_num)
 
     for data in received:
         container_port = data['NetworkSettings']['Ports']\

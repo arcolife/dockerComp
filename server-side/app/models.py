@@ -34,7 +34,8 @@ class Client(db.Document):
 
     """
     containers = db.DictField()
-    ip_addr = db.IntField(unique=True)
+    ip_addr_num = db.IntField(unique=True)
+    ip_addr = db.StringField()
     #client_data = db.DictField()
     #client_result = db.DictField()
 
