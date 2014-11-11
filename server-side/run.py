@@ -28,16 +28,20 @@ from config import \
 from random import randrange
 import netaddr
 
-@app.route('/', methods=['GET','POST'])
+@app.route('/', methods=['GET'])
 def home():
     """
     dockerComp Container Management dashboard
     """
-    print request.headers['Host'], request.method
-    return render_template('index.html',
-                           **TEMPLATE_CONFIGURATION)
-
-
+    try:
+        #print request.path
+        assert request.path == '/'
+        print request.headers['Host'], request.method
+        return render_template('index.html',
+                               **TEMPLATE_CONFIGURATION)
+    except:
+        abort(404)
+        
 @app.route('/<container_id>/')
 def listener(container_id=None):
     """
