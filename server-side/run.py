@@ -26,7 +26,7 @@ from config import \
     TEMPLATE_CONFIGURATION
 
 from random import randrange
-
+import netaddr
 
 @app.route('/', methods=['GET','POST'])
 def home():
@@ -77,15 +77,38 @@ def communicator(container_id=None, client_IP=None):
 
 @app.route('/test/server/', methods=['POST'])
 def test():
-    print request.data
-    return jsonify({'got response from client': 'OK'})
+    print request.host
+    return "\n>>>> Server: Client POST request OK Tested" #jsonify({'got response from client': 'OK'})
 
 
 @app.route('/get_details/', methods=['POST'])
 def get_tasks():
-    received = request.data
-    print received
-    return jsonify({'got response from client': 'OK'})
+    received = json.loads(request.data)
+    ip_addr = netaddr.IPAddress(request.environ['REMOTE_ADDR']).value
+    
+    try:
+        temp_client = Client.objects.get(ip_addr=ip_addr)
+    except:
+        temp_client = Client(ip_addr=ip_addr)
+
+    for data in received:
+        container_port = data['NetworkSettings']['Ports']\
+                         ['80/tcp'][0]['HostPort']
+        container_id = data['Config']['Hostname']
+        container_name = data['Name']
+        container_ip_addr = data['NetworkSettings']['IPAddress']
+        temp_container = Container(container_name=container_name,
+                                   container_ip_addr=container_ip_addr,
+                                   container_id=container_id,
+                                   container_port=container_port,
+                                   config=data)
+
+        temp_client.containers[container_port] = temp_container
+        temp_client.save()
+        
+    print temp_client.to_json()
+    print request.host
+    return '\n>>>> Server: container metadata received..\n'
 
 
 if __name__ == '__main__':

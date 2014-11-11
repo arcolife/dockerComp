@@ -1,7 +1,7 @@
 from subprocess import Popen, PIPE
 import json
 
-f = open('containers_details','rb')
+f = open('../containers_details','rb')
 cmd = ['docker','inspect']
 
 details = []
@@ -20,4 +20,4 @@ for _id in ids:
     retcode = p.returncode
     details.extend(json.loads(stdout))
 
-json.dump(details, open('container_info.json','wb'))
+json.dump(details, open('../container_info.json','wb'))
