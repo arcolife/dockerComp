@@ -133,7 +133,8 @@ def assign_all():
         # print data
         # print "****"
         num = subprocess.Popen(["./scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
-        print num
+        num_out, num_err_out = num.communicate()
+        print num_out
         # print "****"
         # subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
         # curl -H "Content-type: application/json" -X POST http://$1/tasks/ -d "$2"
