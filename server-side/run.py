@@ -132,9 +132,9 @@ def assign_all():
         data = data_generator()
         # print data
         # print "****"
-        # subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
+        subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
         # print "****"
-        subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
+        # subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
         # curl -H "Content-type: application/json" -X POST http://$1/tasks/ -d "$2"
 
 if __name__ == '__main__':
