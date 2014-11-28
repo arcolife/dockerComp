@@ -24,6 +24,9 @@ dockerComp
 To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
 computing task.
 
+**FAQ**
+
+Refer to Wiki .. [click Here!](https://github.com/arcolife/dockerComp/wiki).
 
 **INTRODUCTION**
 
@@ -114,7 +117,7 @@ Make sure you're connected to the internet. Cheers! :)
 
 1. https://github.com/cernvm
 2. http://en.wikipedia.org/wiki/List_of_distributed_computing_projects
-3. https://github.com/cernvm
+3. http://www.rightscale.com/blog/sites/default/files/docker-containers-vms.png 
 4. http://www.psc.edu/science/
 5. http://pybossa.com/
 6. https://okfn.org/press/releases/crowdcrafting-putting-citizens-control-citizen-science/
