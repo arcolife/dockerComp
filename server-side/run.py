@@ -139,8 +139,7 @@ def assign_all():
         # print info_out
         # print type(info_out)
         # print info_out.split()
-        for j in info_out:
-            print j[0]['NetworkSettings'][IPAddress]
+        print info_out[0]['NetworkSettings'][IPAddress]
         print "-------------"
 
 
