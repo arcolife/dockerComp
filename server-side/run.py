@@ -30,7 +30,7 @@ import netaddr
 
 import subprocess
 from subprocess import call
-from subprocess import check_out
+# from subprocess import check_out
 
 @app.route('/', methods=['GET'])
 def home():
