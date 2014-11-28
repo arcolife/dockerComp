@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#readonly SERVER_IP=104.131.170.133
-
 user_interrupt(){
     echo -e "\n\nKeyboard Interrupt detected."
     echo -e "Cleaning Up and terminating..."
@@ -14,9 +12,9 @@ trap user_interrupt SIGTSTP
 
 initial_steps(){
     # init
-    readonly SERVER_IP='104.131.170.133' 
-    echo "export SERVER_D='104.131.170.133'" >> ~/.bashrc
-    export SERVER_D='104.131.170.133'
+    #readonly SERVER_IP='localhost' 
+    echo "export SERVER_D='localhost'" >> ~/.bashrc
+    export SERVER_D='localhost'
 
     echo "What's your package manager?"
     echo "1. APT"
