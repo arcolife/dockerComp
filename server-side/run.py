@@ -130,10 +130,12 @@ def assign_all():
         info_out, err_out = info.communicate()
         cip = json.loads(info_out)[0]['NetworkSettings']['IPAddress']
         data = data_generator()
-        print data
-        print "****"
-        subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
-        print "****"
+        # print data
+        # print "****"
+        # subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
+        # print "****"
+        subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
+        # curl -H "Content-type: application/json" -X POST http://$1/tasks/ -d "$2"
 
 if __name__ == '__main__':
     try:
