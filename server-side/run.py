@@ -28,6 +28,8 @@ from config import \
 from random import randrange
 import netaddr
 
+from subprocess import call
+
 @app.route('/', methods=['GET'])
 def home():
     """
@@ -49,7 +51,6 @@ def listener(container_id=None):
     made by container.
     """
     pass
-    
 
 def data_generator():
     """
@@ -66,7 +67,6 @@ def integrity_checker(container_id=None, data=None):
     checks and verifies data sent over by  containers
     """
     current = Client.objects.get(container_id=container_id)
-
     
 @app.route('/connect/<client_IP>/<container_id>/', methods=['GET','POST'])
 def communicator(container_id=None, client_IP=None):
@@ -83,7 +83,6 @@ def communicator(container_id=None, client_IP=None):
 def test():
     print request.host
     return "\n>>>> Server: Client POST request OK Tested" #jsonify({'got response from client': 'OK'})
-
 
 @app.route('/get_details/', methods=['POST'])
 def get_tasks():
@@ -116,6 +115,10 @@ def get_tasks():
     print request.host
     return '\n>>>> Server: container metadata received..\n'
 
+@app.route('/assign/all', methods=['POST'])
+def assign_all():
+    call(["docker","ps","-q"])
+    pass
 
 if __name__ == '__main__':
     try:

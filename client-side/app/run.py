@@ -17,7 +17,6 @@ def test():
     print request.data
     return jsonify({'got response from server': 'OK'})
 
-
 @app.route('/tasks/', methods=['POST'])
 def get_tasks():
     received = ast.literal_eval(request.data)
@@ -26,6 +25,7 @@ def get_tasks():
     for i in received:
         result += sum(i)
     return Response(str(result))
+
 
 
 if __name__ == '__main__':
