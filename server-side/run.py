@@ -127,6 +127,7 @@ def assign_all():
     out, err = p.communicate()
     print out
     print type(out)
+    print out.split()
 
 if __name__ == '__main__':
     try:
