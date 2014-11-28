@@ -118,6 +118,7 @@ def get_tasks():
 @app.route('/assign/all', methods=['POST'])
 def assign_all():
     dockerIDs = call(["docker","ps","-q"])
+    print type(dockerIDs)
     print dockerIDs
 
 if __name__ == '__main__':
