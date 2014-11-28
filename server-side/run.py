@@ -131,7 +131,9 @@ def assign_all():
         cip = json.loads(info_out)[0]['NetworkSettings']['IPAddress']
         data = data_generator()
         print data
+        print "****"
         subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
+        print "****"
 
 if __name__ == '__main__':
     try:
