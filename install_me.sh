@@ -42,8 +42,8 @@ initial_steps(){
 setup_app(){
     git clone https://github.com/arcolife/dockerComp.git
     cd dockerComp/client-side
-    ./launch.sh
-    ./test.sh
+    sudo ./launch.sh
+    sudo ./test.sh
 }
 
 initial_steps
