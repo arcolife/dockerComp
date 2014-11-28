@@ -28,6 +28,7 @@ from config import \
 from random import randrange
 import netaddr
 
+import subprocess
 from subprocess import call
 from subprocess import check_out
 
@@ -118,9 +119,14 @@ def get_tasks():
 
 @app.route('/assign/all', methods=['POST'])
 def assign_all():
-    dockerIDs = check_output(["docker","ps","-q"])
-    print type(dockerIDs)
-    print dockerIDs
+    # dockerIDs = check_output(["docker","ps","-q"])
+    # print type(dockerIDs)
+    # print dockerIDs
+
+    p = subprocess.Popen(["docker", "ps", "-q"], stdout=subprocess.PIPE)
+    out, err = p.communicate()
+    print out
+    print type(out)
 
 if __name__ == '__main__':
     try:
