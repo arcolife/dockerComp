@@ -123,27 +123,14 @@ def assign_all():
     # dockerIDs = check_output(["docker","ps","-q"])
     # print type(dockerIDs)
     # print dockerIDs
-
     p = subprocess.Popen(["docker", "ps", "-q"], stdout=subprocess.PIPE)
     out, err = p.communicate()
-    # print out
-    # print type(out)
-    # print out.split()
-
-    print "----"
-
     for i in out.split():
-        print i
         info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
         info_out, err_out = info.communicate()
-        # print info_out
-        # print type(info_out)
-        # print info_out.split()
-        print info_out[0]['NetworkSettings'][IPAddress]
-        print "-------------"
-
-
-
+        cip = json.loads(info_out)[0]['NetworkSettings']['IPAddress']
+        data = str(data_generator())
+        subprocess.Popen(["scripts/test_client.sh",cip,data], stdout=subprocess.PIPE)
 
 if __name__ == '__main__':
     try:
