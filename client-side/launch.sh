@@ -13,6 +13,6 @@ docker run -p :80 -d arcolife/docker_comp
 # python read_container_details.py
 # cd ..
 docker inspect $(docker ps -q | head -n 4) > container_info.json
-curl -H "Content-type: application/json" -X POST http://104.131.170.133/get_details/ -d @container_info.json
+curl -H "Content-type: application/json" -X POST http://$SERVER_D:5000/get_details/ -d @container_info.json
 
 echo "4 containers have been deployed.."
