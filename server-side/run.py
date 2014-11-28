@@ -125,7 +125,7 @@ def assign_all():
     # print dockerIDs
     p = subprocess.Popen(["docker", "ps", "-q"], stdout=subprocess.PIPE)
     out, err = p.communicate()
-    for i in out.split():
+    for index,i in enumerate(out.split()):
         info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
         info_out, err_out = info.communicate()
         cip = json.loads(info_out)[0]['NetworkSettings']['IPAddress']
@@ -135,6 +135,8 @@ def assign_all():
         num = subprocess.Popen(["./scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
         num_out, num_err_out = num.communicate()
         print num_out
+        print len(out.split())-index-1
+
         # print "****"
         # subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
         # curl -H "Content-type: application/json" -X POST http://$1/tasks/ -d "$2"
