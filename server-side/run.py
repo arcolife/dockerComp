@@ -135,9 +135,9 @@ def assign_all():
         print i
         info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
         info_out, err_out = info.communicate()
-        print info
-        print type(info)
-        print info.split()
+        print info_out
+        print type(info_out)
+        print info_out.split()
         print "-------------"
 
 
