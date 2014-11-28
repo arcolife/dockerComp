@@ -131,11 +131,13 @@ def assign_all():
 
     print "----"
 
-    info = subprocess.Popen(["docker","inspect","id"], stdout=subprocess.PIPE)
-    info_out, err_out = info.communicate()
-    print info
-    print type(info)
-    print info.split()
+    for i in out.split()
+        info = subprocess.Popen(["docker","inspect",int(i)], stdout=subprocess.PIPE)
+        info_out, err_out = info.communicate()
+        print info
+        print type(info)
+        print info.split()
+        print "-------------"
 
 
 if __name__ == '__main__':
