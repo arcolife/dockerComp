@@ -129,8 +129,9 @@ def assign_all():
         info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
         info_out, err_out = info.communicate()
         cip = json.loads(info_out)[0]['NetworkSettings']['IPAddress']
-        data = str(data_generator())
-        subprocess.Popen(["scripts/test_client.sh",cip,data], stdout=subprocess.PIPE)
+        data = data_generator()
+        print data
+        subprocess.Popen(["scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
 
 if __name__ == '__main__':
     try:
