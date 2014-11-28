@@ -129,6 +129,15 @@ def assign_all():
     print type(out)
     print out.split()
 
+    print "----"
+
+    info = subprocess.Popen(["docker","inspect","id"], stdout=subprocess.PIPE)
+    info_out, err_out = info.communicate()
+    print info
+    print type(info)
+    print info.split()
+
+
 if __name__ == '__main__':
     try:
         app.run(host = HOST,
