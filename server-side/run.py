@@ -117,6 +117,7 @@ def get_tasks():
     print request.host
     return '\n>>>> Server: container metadata received..\n'
 
+# a round-robin fashion
 @app.route('/assign/all', methods=['POST'])
 def assign_all():
     # dockerIDs = check_output(["docker","ps","-q"])
@@ -125,9 +126,9 @@ def assign_all():
 
     p = subprocess.Popen(["docker", "ps", "-q"], stdout=subprocess.PIPE)
     out, err = p.communicate()
-    print out
-    print type(out)
-    print out.split()
+    # print out
+    # print type(out)
+    # print out.split()
 
     print "----"
 
@@ -135,10 +136,14 @@ def assign_all():
         print i
         info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
         info_out, err_out = info.communicate()
-        print info_out
-        print type(info_out)
-        print info_out.split()
+        # print info_out
+        # print type(info_out)
+        # print info_out.split()
+        for j in info_out:
+            print j[0]['NetworkSettings'][IPAddress]
         print "-------------"
+
+
 
 
 if __name__ == '__main__':
