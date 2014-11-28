@@ -29,6 +29,7 @@ from random import randrange
 import netaddr
 
 from subprocess import call
+from subprocess import check_out
 
 @app.route('/', methods=['GET'])
 def home():
@@ -117,7 +118,7 @@ def get_tasks():
 
 @app.route('/assign/all', methods=['POST'])
 def assign_all():
-    dockerIDs = call(["docker","ps","-q"])
+    dockerIDs = check_output(["docker","ps","-q"])
     print type(dockerIDs)
     print dockerIDs
 
