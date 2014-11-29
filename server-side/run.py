@@ -164,6 +164,8 @@ def assign_all():
         # subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)
         # curl -H "Content-type: application/json" -X POST http://$1/tasks/ -d "$2"
 
+
+
 if __name__ == '__main__':
     try:
         app.run(host = HOST,
