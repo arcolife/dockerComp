@@ -130,7 +130,9 @@ def docker_stats():
         #print request.path
         # assert request.path == '/'
         print request.headers['Host'], request.method
-        return render_template(jsonify({"num_machines":num_machines,"docker_arr":docker_arr}))
+        # return render_template(jsonify({"num_machines":num_machines,"docker_arr":docker_arr}))
+        return render_template("stats.html",
+                               **TEMPLATE_CONFIGURATION)
     except:
         abort(404)
 
