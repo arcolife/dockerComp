@@ -117,7 +117,25 @@ def get_tasks():
     print request.host
     return '\n>>>> Server: container metadata received..\n'
 
-# a round-robin fashion
+####
+## Keep track of important records
+####
+
+num_machines = 0
+docker_arr = []
+
+@app.route('/dockers/stats', methods=['GET'])
+def docker_stats():
+    try:
+        #print request.path
+        # assert request.path == '/'
+        print request.headers['Host'], request.method
+        return render_template('stats.html',
+                               **TEMPLATE_CONFIGURATION)
+    except:
+        abort(404)
+
+# deamon runs the computing tasks in a round-robin fashion
 @app.route('/assign/all', methods=['POST'])
 def assign_all():
     # dockerIDs = check_output(["docker","ps","-q"])
@@ -126,6 +144,8 @@ def assign_all():
     while(True):
         p = subprocess.Popen(["docker", "ps", "-q"], stdout=subprocess.PIPE)
         out, err = p.communicate()
+        num_machines = len(out.split())
+        docker_arr = []
         for index,i in enumerate(out.split()):
             info = subprocess.Popen(["docker","inspect",i], stdout=subprocess.PIPE)
             info_out, err_out = info.communicate()
@@ -136,7 +156,8 @@ def assign_all():
             num = subprocess.Popen(["./scripts/test_client.sh",cip,str(data)], stdout=subprocess.PIPE)
             num_out, num_err_out = num.communicate()
             print num_out
-            print len(out.split())-index-1
+            # print len(out.split())-index-1
+            docker_arr.append({'dockerID':i,'dockerInstanceIP':cip})
 
         # print "****"
         # subprocess.Popen(["curl","-H","Content-type: application/json","-X","POST","http://"+cip+"/tasks","-d",str(data)], stdout=subprocess.PIPE)

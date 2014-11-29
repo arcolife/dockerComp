@@ -26,8 +26,6 @@ def get_tasks():
         result += sum(i)
     return Response(str(result))
 
-
-
 if __name__ == '__main__':
     try:
         app.run(host = '0.0.0.0',
