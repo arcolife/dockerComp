@@ -37,7 +37,7 @@ def home():
     """
     dockerComp Container Management dashboard
     """
-   try:
+    try:
         #print request.path
         assert request.path == '/'
         print request.headers['Host'], request.method
