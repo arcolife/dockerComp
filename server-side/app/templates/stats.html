@@ -2,6 +2,8 @@
 
 {% block content %}
 Current server stats.
-<p>{{num_machines}}</p>
-
+<strong>Total clients conected:</strong> {{total_clients}}
+<hr/>
+<strong> Client details: </strong> <br/>
+{{docker_arr}}
 {% endblock %} 
