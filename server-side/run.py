@@ -132,7 +132,7 @@ def docker_stats():
         print request.headers['Host'], request.method
         # return render_template(jsonify({"num_machines":num_machines,"docker_arr":docker_arr}))
         return render_template("stats.html",
-                               num_machines,docker_arr)
+                               x={"num_machines":num_machines,"docker_arr":docker_arr})
     except:
         abort(404)
 
