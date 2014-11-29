@@ -37,12 +37,27 @@ def home():
     """
     dockerComp Container Management dashboard
     """
-    try:
+   try:
         #print request.path
         assert request.path == '/'
         print request.headers['Host'], request.method
-        return render_template('index.html',
-                               **TEMPLATE_CONFIGURATION)
+        print "HERE"
+        all_objects = Client.objects.all()
+        docker_arr = {}
+        for client_obj in all_objects:
+            docker_arr[client_obj.ip_addr] = { 
+                'container_count': len(client_obj.containers),
+                'container_details' : {} 
+            }
+            for container_id in client_obj.containers:
+                docker_arr[client_obj.ip_addr]['container_details'][container_id] = [
+                    client_obj.containers[container_id].container_ip_addr,
+                    client_obj.containers[container_id].container_name
+                ]
+        return render_template("stats.html",
+                               total_clients=Client.objects.count(),
+                               docker_arr=docker_arr)
+
     except:
         abort(404)
         
