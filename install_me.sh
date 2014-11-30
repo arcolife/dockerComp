@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# define your server hostname here; default name defined below..
+SERVER_HOSTNAME=$(echo  $HOSTNAME  | awk -F'.' '{print $1}')
+# SERVER_HOSTNAME=""
+
 user_interrupt(){
     echo -e "\n\nKeyboard Interrupt detected."
     echo -e "Cleaning Up and terminating..."
@@ -10,12 +14,18 @@ user_interrupt(){
 trap user_interrupt SIGINT
 trap user_interrupt SIGTSTP
 
-initial_steps(){
-    # init
-    #readonly SERVER_IP='localhost' 
-    echo "export SERVER_D='localhost'" >> ~/.bashrc
-    export SERVER_D='localhost'
+setup_env(){
+    check_env=$(grep SERVER_D ~/.bashrc)
+    if [[ -z $check_env ]]
+    then
+	echo "export SERVER_D='"$SERVER_HOSTNAME"'" >> ~/.bashrc
+    else
+	sed -i "s/.*SERVER_D=.*/export SERVER_D='$SERVER_HOSTNAME'/g" ~/.bashrc 
+    fi
+    export SERVER_D=$SERVER_HOSTNAME
+}
 
+setup_deps(){
     echo "What's your package manager?"
     echo "1. APT"
     echo "2. YUM"
@@ -37,14 +47,16 @@ initial_steps(){
 	exit
     fi
     sudo usermod -a -G docker $USER
+    #sudo newgrp docker
 }
 
 setup_app(){
     git clone https://github.com/arcolife/dockerComp.git
     cd dockerComp/client-side
-    ./launch.sh
-    ./test.sh
+    sudo ./launch.sh
+    sudo ./test.sh
 }
 
-initial_steps
+setup_env
+setup_deps
 setup_app
