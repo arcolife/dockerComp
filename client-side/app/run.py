@@ -1,8 +1,14 @@
 #!/usr/bin/python
 
-import ast#, json
+import ast
 import os, sys
 from flask import Flask, jsonify, request, Response
+
+import subprocess
+from subprocess import call
+
+import socket
+import requests, json
 
 app = Flask(__name__, static_url_path='')
 
@@ -17,7 +23,6 @@ def test():
     print request.data
     return jsonify({'got response from server': 'OK'})
 
-
 @app.route('/tasks/', methods=['POST'])
 def get_tasks():
     received = ast.literal_eval(request.data)
@@ -27,6 +32,13 @@ def get_tasks():
         result += sum(i)
     return Response(str(result))
 
+@app.route('/get_task', methods=['POST'])
+def get_task():
+    while(True):
+        ip = socket.gethostname()
+        p = subprocess.Popen(["./scripts/request_task.sh",ip], stdout=subprocess.PIPE)
+        out, err = p.communicate()
+        ######## add stuff ########
 
 if __name__ == '__main__':
     try:
