@@ -97,7 +97,7 @@ Note: For server side deployement (i.e., the server that basically is responsibl
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ ./client-side/test.sh```
+    run ```$ ./client-side/test.sh $SERVER_D```
 
 - From server side:
   - TBD
