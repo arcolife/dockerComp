@@ -77,14 +77,24 @@ Just 1:
      - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/install_me.sh)
        and run ```$ ./install_me.sh``` this within a terminal. 
 
-Make sure you're connected to the internet. Cheers! :)
+- Notes on server deployment:
+  
+  -  Make sure that your 'server-side/' is up and running, either locally (for test purpose), 
+     or if its deployed elsewhere, then the hostname/IP is provided in the $SERVER_HOSTNAME 
+     in your copy of ```install_me.sh```. 
 
-Note: For server side deployement (i.e., the server that basically is responsible for distributing data to clients), 
-It has to be deployed somewhere and it's IP has to be provided at line ```export SERVER_D=<IP ADDRESS>``` in install_me.sh.
-And then you may distribute the install_me.sh script to the clients. To be able to let the clients communicate with 
-your server, you really need to host it somewhere and distribute the modified install script as instructed above.
+  - To run the server-side, open up a terminal, go to dockerComp/server-side/ and run ```$ ./start```
 
-To test it locally, run ```# cd server-side/ && python run.py``` in one terminal and in other, go to project root and run ```# ./install_me.sh ```.
+Cheers! :)
+
+Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
+      to clients), It has to be deployed somewhere and it's IP has to be provided at line 
+      ```export SERVER_D=<IP ADDRESS>``` in install_me.sh. And then you may distribute the install_me.sh 
+      script to the clients. To be able to let the clients communicate with your server, you really need 
+      to host it somewhere and distribute the modified install script as instructed above.
+
+To test it locally, run ```# cd server-side/ && python run.py``` in one terminal and in other, 
+go to project root and run ```# ./install_me.sh ```.
 
 **TESTS**
 
