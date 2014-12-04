@@ -70,21 +70,21 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
 
 - Benchmark results and compare with existing methodologies. 
 
-**STEPS***
+**STEPS**
 
-- Just 1:
-
-  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/install_me.sh) and run 
-
-  ```$ ./install_me.sh```
-
-- Notes on server deployment:
+- Server side:
 
   - Make sure that your 'server-side/' is up and running, either locally (for test purpose), 
      or if its deployed elsewhere, then the hostname/IP is provided in the $SERVER_HOSTNAME 
-     in your copy of ```install_me.sh```. 
+     in your copy of ```install_me.sh```.  (refer next major point on 'Client side' for this script)
 
   - To run the server-side, open up a terminal, go to dockerComp/server-side/ and run ```$ ./start```
+
+- Client side:
+
+  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/install_me.sh) and run 
+
+  ```$ ./install_me.sh``` [configure your Server location in this script, in ```SERVER_HOSTNAME```]
 
 Cheers! :)
 
