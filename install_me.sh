@@ -53,8 +53,8 @@ setup_deps(){
 setup_app(){
     git clone https://github.com/arcolife/dockerComp.git
     cd dockerComp/client-side
-    sudo ./launch.sh
-    sudo ./test.sh
+    sudo ./launch.sh $SERVER_D
+    sudo ./test.sh $SERVER_D
 }
 
 setup_env
