@@ -25,50 +25,49 @@ sudo chkconfig mongod on
 sudo service mongod stop
 
 # and run it with:
-# $ sudo mongod --noauth --dbpath=/var/lib/mongo
+sudo mongod --noauth --dbpath=/var/lib/mongo
 
 # in another terminal, run $ mongo ; then
 # add admin user and db, as follows:
 
-# use admin
-# db.createUser(
-#   {
-#     user: "siteUserAdmin",
-#     pwd: "password",
-#     roles:
-#     [
-#       {
-#         role: "userAdminAnyDatabase",
-#         db: "admin"
-#       }
-#     ]
-#   }
-# )
+use admin
+db.createUser(
+  {
+    user: "manager",
+    pwd: "my_pass",
+    roles:
+    [
+      {
+        role: "userAdminAnyDatabase",
+        db: "admin"
+      }
+    ]
+  }
+)
 
 # then run following for a regular db and user, as follows:
 
-# use products
-# db.createUser(
-#   {
-#     user: "recordsUserAdmin",
-#     pwd: "password",
-#     roles:
-#     [
-#       {
-#         role: "userAdmin",
-#         db: "records"
-#       }
-#     ]
-#   }
-# )
+use records
+db.createUser(
+  {
+    user: "jesse",
+    pwd: "jess's pass",
+    roles:
+    [
+      {
+        role: "userAdmin",
+        db: "records"
+      }
+    ]
+  }
+)
 
 # then exit the shell and close the manual mongod server
-
-# then run this to ensure that on restart, mongo doesn't fail
+# and run this to ensure that on restart, mongo doesn't fail
 sudo chown -R mongod:mongod /var/lib/mongo/
-
 sudo service mongod restart
 
-# mongo -u arco --authenticationDatabase docker -p
+# test your user login auth
+mongo -u jesse --authenticationDatabase records -p
 
 # replace mongo with mongodb as per OS preference

@@ -51,8 +51,14 @@ setup_deps(){
 }
 
 setup_app(){
+    cd ~
     git clone https://github.com/arcolife/dockerComp.git
-    cd dockerComp/client-side
+    cd dockerComp/
+    # remove server side code, useless for normal users
+    git config core.sparseCheckout true
+    echo client-side/ > .git/info/sparse-checkout
+    git checkout master
+    cd client-side/
     sudo ./launch.sh $SERVER_D
     sudo ./test.sh $SERVER_D
 }
