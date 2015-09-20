@@ -41,7 +41,6 @@ def home():
         #print request.path
         assert request.path == '/'
         print request.headers['Host'], request.method
-        print "HERE"
         all_objects = Client.objects.all()
         docker_arr = {}
         for client_obj in all_objects:
@@ -51,8 +50,9 @@ def home():
             }
             for container_id in client_obj.containers:
                 docker_arr[client_obj.ip_addr]['container_details'][container_id] = [
+                    client_obj.containers[container_id].container_name,
                     client_obj.containers[container_id].container_ip_addr,
-                    client_obj.containers[container_id].container_name
+                    client_obj.containers[container_id].container_port
                 ]
         return render_template("stats.html",
                                total_clients=Client.objects.count(),
@@ -106,7 +106,7 @@ def get_tasks():
     received = json.loads(request.data)
     ip_addr = request.environ['REMOTE_ADDR']
     ip_addr_num = netaddr.IPAddress(ip_addr).value
-    
+
     try:
         temp_client = Client.objects.get(ip_addr=ip_addr)
     except:
@@ -114,20 +114,28 @@ def get_tasks():
                              ip_addr_num=ip_addr_num)
 
     for data in received:
-        container_port = data['NetworkSettings']['Ports']\
-                         ['80/tcp'][0]['HostPort']
+        # import pdb; pdb.set_trace()    
+        try:
+            container_port = data['NetworkSettings']['Ports']\
+                             ['80/tcp'][0]['HostPort']
+        except:
+            # the containerized app was exposed on port 80
+            container_port = '80'
+
         container_id = data['Config']['Hostname']
         container_name = data['Name']
+        print container_name
         container_ip_addr = data['NetworkSettings']['IPAddress']
         temp_container = Container(container_name=container_name,
                                    container_ip_addr=container_ip_addr,
                                    container_id=container_id,
-                                   container_port=container_port,
-                                   config=data)
+                                   # config=data)
+                                   container_port=container_port)
 
-        temp_client.containers[container_port] = temp_container
-        temp_client.save()
-        
+        temp_client.containers[container_name] = temp_container
+    
+    temp_client.save()
+
     #print temp_client.to_json()
     print request.host
     return '\n>>>> Server: container metadata received..\n'

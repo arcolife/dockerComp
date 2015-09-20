@@ -1,39 +1,8 @@
 *.py[cod]
 *~
 
-# C extensions
-*.so
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-var
-sdist
-develop-eggs
-.installed.cfg
-lib64
-__pycache__
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-nosetests.xml
-
-# Translations
-*.mo
-
-venv
 db.sqlite3
-dump
 *.db
-nohup.out
 container_info.json
 containers_details
-ip_addr
+dumps/

@@ -1,5 +1,6 @@
 from app.users.models import *
 from datetime import datetime
+ 
 
 def create_client(client_IP, containers):
     pass
@@ -7,10 +8,14 @@ def create_client(client_IP, containers):
 def add_container(client_IP, container_id):
     pass
     
-def delete_container(client_IP, container_id):
+def purge_container(client_IP, container_id):
+	# if user modified the config on the fly
+	# then remove one of the containers and 
+	# update this on The Channel
     pass
 
-def delete_client(client_IP):
+def purge_client(client_IP):
+	# counter = 3
     pass
 
 def add_data(data, container_id, client_IP):

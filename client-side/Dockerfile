@@ -1,24 +1,39 @@
+# DEPLOYMENT INSTRUCTIONS
+
+# To build the image, refer:
+#  $ docker build -t docker_comp .
+
+# To run using the container, refer the following command:
+#  $ docker run -it -d docker_comp
+###########################################################
+
 FROM ubuntu:trusty
 MAINTAINER Archit Sharma <archit.py@gmail.com>
 
+# update and install deps
 RUN apt-get update
 RUN apt-get install -y python python-pip python-dev
 RUN apt-get install -y nginx supervisor curl git
 RUN pip install uwsgi Flask
 
-RUN \
-    cd /tmp && \
-    git clone https://github.com/arcolife/dockerComp.git && \
-    cd dockerComp/client-side && \
-    ./test.sh
+# clone for github
+# RUN git clone https://github.com/arcolife/dockerComp.git /opt/dockerComp/
 
-ADD ./app /docker/app
-ADD ./conf /docker/conf
+#     OR
+# add from source
+
+RUN mkdir -p /opt/dockerComp/app/ /opt/dockerComp/conf/ /var/dockerComp/
+ADD ./app /opt/dockerComp/app/
+ADD ./conf /opt/dockerComp/conf/
+ADD ./scripts /opt/dockerComp/scripts/
+COPY scripts/test.sh /opt/dockerComp/
+
+# configure services
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
 RUN rm /etc/nginx/sites-enabled/default
-RUN ln -s /docker/conf/app_nginx.conf /etc/nginx/sites-enabled/
-RUN ln -s /docker/conf/app_supervisor.conf /etc/supervisor/conf.d/
+RUN ln -s /opt/dockerComp/conf/app_nginx.conf /etc/nginx/sites-enabled/
+RUN ln -s /opt/dockerComp/conf/app_supervisor.conf /etc/supervisor/conf.d/
 
 EXPOSE 80
-EXPOSE 5000
-CMD ["supervisord", "-n"]
+
+CMD ["/usr/bin/supervisord", "-n"]
