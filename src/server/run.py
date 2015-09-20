@@ -114,7 +114,6 @@ def get_tasks():
                              ip_addr_num=ip_addr_num)
 
     for data in received:
-        # import pdb; pdb.set_trace()    
         try:
             container_port = data['NetworkSettings']['Ports']\
                              ['80/tcp'][0]['HostPort']
@@ -133,7 +132,7 @@ def get_tasks():
                                    container_port=container_port)
 
         temp_client.containers[container_name] = temp_container
-    
+
     temp_client.save()
 
     #print temp_client.to_json()

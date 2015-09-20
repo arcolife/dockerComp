@@ -8,6 +8,9 @@ SERVER_PORT="5000"
 
 DIRECTORY=$HOME/dockerComp/
 
+# set the no. of workers to launch on client
+CONTAINER_COUNT=4
+
 # To be used for checking dependencies
 # Consider the deps to be not present
 DOCKER_INSTALLED=0
@@ -28,41 +31,37 @@ trap user_interrupt SIGINT
 trap user_interrupt SIGTSTP
 
 setup_env(){
-    if [[ -z $DC_HOST ]]
-    then
-	echo "export DC_HOST='"$SERVER_HOSTNAME"'" >> ~/.bashrc
-    echo "export DC_PORT='"$SERVER_PORT"'" >> ~/.bashrc
-    # either source it or set it for current session
-    export DC_HOST=$SERVER_HOSTNAME
-    export DC_PORT=$SERVER_PORT
+    if [[ -z $DC_HOST ]]; then
+    	echo "export DC_HOST='"$SERVER_HOSTNAME"'" >> ~/.bashrc
+        echo "export DC_PORT='"$SERVER_PORT"'" >> ~/.bashrc
+        # either source it or set it for current session
+        export DC_HOST=$SERVER_HOSTNAME
+        export DC_PORT=$SERVER_PORT
     fi
 }
 
 check_docker(){
-    docker_op=`docker --version`
-    if [[ $docker_op != *"command not found"* ]]
-    then
-    DOCKER_INSTALLED=1 # Docker is installed
-    echo "Docker is already installed"
+    DOCKER_CMD=$(which docker)
+    if [[ ! -z $DOCKER_CMD ]]; then
+        DOCKER_INSTALLED=1 # Docker is installed
+        echo "Docker is already installed"
     fi
 }
 
 check_pip(){
-    pip_op=`pip2 -V`
-    if [[ $pip_op != *"command not found"* ]]
-    then
-    PIP_INSTALLED=1 # pip is installed
-    echo "pip is already installed"
+    PIP_CMD=$(which pip2)
+    if [[ ! -z $PIP_CMD ]]; then
+        PIP_INSTALLED=1 # pip is installed
+        echo "pip is already installed"
     fi
 }
 
 check_flask(){
-    output=$(python -c "try: import flask; print               
+    FLASK_CMD=$(python -c "try: import flask; print               
 except: print 1")
-    if [[ -z $output ]]
-    then
-    FLASK_INSTALLED=1 # flask is installed
-    echo "flask is already installed"
+    if [[ -z $FLASK_CMD ]]; then
+        FLASK_INSTALLED=1 # flask is installed
+        echo "flask is already installed"
     fi
 }
 
@@ -159,7 +158,7 @@ setup_app(){
     echo src/client/ > .git/info/sparse-checkout
     git checkout master
     cd src/client/
-    ./scripts/launch.sh
+    ./scripts/launch.sh $CONTAINER_COUNT
     ./scripts/test.sh
     echo -e "\n..cleaning up and removing "$DIRECTORY
     rm -rf $DIRECTORY
