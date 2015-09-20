@@ -43,12 +43,12 @@
 =============== ENHANCEMENTS ====================
 
 - [ ] Task Distribution redundancy 
-- integrate cernvm
-	- [ ] rpm
-	- [ ] fs
-	- [ ] contextualization
-	- [ ] fuse-FS integration without privileged mode (refer vault volume plugin)
-	- [ ] Define tuned config 
+- [ ] integrate cernvm
+	- rpm
+	- fs
+	- contextualization
+	- fuse-FS integration without privileged mode (refer vault volume plugin)
+	- Define tuned config 
 
 - [ ] integrate PyBossa
-	- [ ] deploy sample app (face recog?)
+	- deploy sample app (face recog?)
