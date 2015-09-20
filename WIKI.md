@@ -30,7 +30,7 @@ It runs inside Linux machines (Ubuntu/Fedora) ..i.e., RPM or DEB based systems.
 It currently doesn't run on Mac. We need to add suport for that. 
 
 I made a basic prototype that launhes certain No.# of containers and makes it easy simple users 
-by having to run just one script at the end ```install_me.sh``` . No downloading cernVMs, 
+by having to run just one script at the end ```installer.sh``` . No downloading cernVMs, 
 no downloading oracle virtual boxes nothing, just one simple script..
 
 - Something you should know..
@@ -59,7 +59,7 @@ make a daemon on client side, that keeps track of containers and allots CPU powe
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ ./client-side/test.sh```
+    run ```$ ./src/client/test.sh```
 
 - From server side:
   - TBD

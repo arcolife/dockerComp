@@ -23,10 +23,10 @@ RUN pip install uwsgi Flask
 # add from source
 
 RUN mkdir -p /opt/dockerComp/app/ /opt/dockerComp/conf/ /var/dockerComp/
-ADD ./app /opt/dockerComp/app/
-ADD ./conf /opt/dockerComp/conf/
-ADD ./scripts /opt/dockerComp/scripts/
-COPY scripts/test.sh /opt/dockerComp/
+ADD ./src/client/app /opt/dockerComp/app/
+ADD ./src/client/conf /opt/dockerComp/conf/
+ADD ./src/client/scripts /opt/dockerComp/scripts/
+COPY ./src/client/scripts/test.sh /opt/dockerComp/
 
 # configure services
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf

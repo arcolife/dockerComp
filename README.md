@@ -14,7 +14,7 @@ dockerComp
 
 - In case you're curious how to go about running this from client side:
  
-  - So once the server is up and running, all one has to do is download and run install_me.sh
+  - So once the server is up and running, all one has to do is download and run installer.sh
 
 - Docker Image: ``` $ docker pull arcolife/docker_comp ``` (will be kept updated)
 
@@ -74,30 +74,30 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
 
 - Server side:
 
-  - Make sure that your 'server-side/' is up and running, either locally (for test purpose), 
+  - Make sure that your 'src/server/' is up and running, either locally (for test purpose), 
      or if its deployed elsewhere, then the hostname/IP is provided in the $SERVER_HOSTNAME 
-     in your copy of ```install_me.sh```.  (refer next major point on 'Client side' for this script)
+     in your copy of ```installer.sh```.  (refer next major point on 'Client side' for this script)
 
-  - To run the server-side, open up a terminal, go to dockerComp/server-side/ and run ```$ ./start```
+  - To run the src/server, open up a terminal, go to dockerComp/src/server/ and run ```$ ./start```
     This starts the server locally on your machine.
 
 - Client side:
 
-  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/install_me.sh) and run 
+  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/installer.sh) and run 
 
-  ```$ ./install_me.sh``` [configure your Server location in this script, in ```SERVER_HOSTNAME```]
+  ```$ ./installer.sh``` [configure your Server location in this script, in ```SERVER_HOSTNAME```]
 
 Cheers! :)
 
 Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
-      to clients), It has to be deployed somewhere and it's IP has to be provided in your install_me.sh. 
+      to clients), It has to be deployed somewhere and it's IP has to be provided in your installer.sh. 
       And then you may distribute the script to the clients. 
 
 **TESTS**
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ ./client-side/test.sh $SERVER_D```
+    run ```$ ./src/client/test.sh $SERVER_D```
 
 - From server side:
   - TBD
