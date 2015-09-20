@@ -12,7 +12,9 @@ docker run -it -d arcolife/docker_comp
 # cd scripts/
 # python read_container_details.py
 # cd ..
-docker inspect $(docker ps -q | head -n 4) > container_info.json
+
+# docker inspect $(docker ps -q | head -n 4) > container_info.json
+docker inspect $(docker ps  | grep arcolife/docker_comp | awk -F' ' '{print $1}') > container_info.json
 
 curl -H "Content-type: application/json" -X POST http://$DC_HOST:$DC_PORT/get_details/ -d @container_info.json
 
