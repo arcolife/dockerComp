@@ -1,6 +1,8 @@
 #!/bin/bash
 
-# # define your server hostname here; default name defined below..
+# # define your server hostname amd ports using environment variables:
+# `DC_HOST` and `DC_PORT`.  Although, if you're testing locally, 
+# the defaults defined below will take care of dev env..
 SERVER_HOSTNAME=$(echo  $HOSTNAME  | awk -F'.' '{print $1}')
 SERVER_PORT="5000"
 

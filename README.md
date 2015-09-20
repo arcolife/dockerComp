@@ -72,20 +72,31 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
 
 **STEPS**
 
-- Server side:
+- Server side (src/server/):
 
   - Make sure that your 'src/server/' is up and running, either locally (for test purpose), 
-     or if its deployed elsewhere, then the hostname/IP is provided in the $SERVER_HOSTNAME 
-     in your copy of ```installer.sh```.  (refer next major point on 'Client side' for this script)
+     or if its deployed elsewhere, then the hostname/IP and Port is provided in the environment 
+     variables as under `$DC_HOST` and `$DC_PORT`.
+
+     (refer next major point on 'Client side' for this script)
+
+  - Do ensure that for running the server, you need to install mongoDB. Refer to following: 
+    [install_mongo guide](https://github.com/arcolife/dockerComp/blob/master/src/server/install_mongo)
+    and then set the env variables `U_DB, U_USER and U_PASS` giving the same values to them as the
+    db name, it's user and password set while setting up mongoDB.
+
+
+  - Ensure that you've installed deps from `dockerComp/src/server/requirements.txt`
 
   - To run the src/server, open up a terminal, go to dockerComp/src/server/ and run ```$ ./start```
     This starts the server locally on your machine.
 
-- Client side:
+
+- Client side (src/client/):
 
   - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/installer.sh) and run 
 
-  ```$ ./installer.sh``` [configure your Server location in this script, in ```SERVER_HOSTNAME```]
+  ```$ ./installer.sh``` [configure your Server location for this script, as under `$DC_HOST` & `$DC_PORT` ]
 
 Cheers! :)
 
@@ -97,7 +108,7 @@ Note: For server side deployement (i.e., the server that basically is responsibl
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ ./src/client/test.sh $SERVER_D```
+    run ```$ src/client/scripts/test.sh``` (make sure env vars `DC_HOST` and `DC_PORT` are set)
 
 - From server side:
   - TBD

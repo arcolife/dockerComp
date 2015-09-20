@@ -1,31 +1,18 @@
-#!/bin/bash
-
-# to install mongo on Red Hat based Linux platforms
-
-sudo echo "[mongodb]
-name=MongoDB Repository
-baseurl=http://downloads-distro.mongodb.org/repo/redhat/os/x86_64/
-gpgcheck=0
-enabled=1" > /etc/yum.repos.d/mongodb.repo
-
-sudo yum install -y mongodb-org
-
-sudo semanage port -a -t mongod_port_t -p tcp 27017
-
-sudo gpasswd -a ${USER} docker
-#sudo usermod -a -G mongod $USER 
-
+# Ubuntu 14.04
+sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+sudo apt-get update
+sudo apt-get install -y mongodb-org
 sudo service mongod start
+# sudo service mongod enable
+# sudo service mongod restart
 
-sudo grep "waiting for connections on port" /var/log/mongodb/mongod.log 
 
-sudo chkconfig mongod on
+# SETUP root/user accounts
 
-# stop mongo now
+# stop the service and run this
 sudo service mongod stop
-
-# and run it with:
-sudo mongod --noauth --dbpath=/var/lib/mongo
+sudo mongod --noauth --dbpath=/var/lib/mongodb/
 
 # in another terminal, run $ mongo ; then
 # add admin user and db, as follows:
@@ -34,7 +21,7 @@ use admin
 db.createUser(
   {
     user: "manager",
-    pwd: "my_pass",
+    pwd: "<admin pass for manager>",
     roles:
     [
       {
@@ -47,27 +34,41 @@ db.createUser(
 
 # then run following for a regular db and user, as follows:
 
-use records
+use jugad
 db.createUser(
   {
-    user: "jesse",
-    pwd: "jess's pass",
+    user: "arco",
+    pwd: "arco123",
     roles:
     [
       {
         role: "userAdmin",
-        db: "records"
+        db: "jugad"
       }
     ]
   }
 )
 
 # then exit the shell and close the manual mongod server
-# and run this to ensure that on restart, mongo doesn't fail
-sudo chown -R mongod:mongod /var/lib/mongo/
+
+# then run this to ensure that on restart, mongo doesn't fail
+sudo chown -R mongodb:mongodb /var/lib/mongodb/
+
 sudo service mongod restart
 
-# test your user login auth
-mongo -u jesse --authenticationDatabase records -p
+# ensure that mongod.conf contains auth:true
+# for logging in as user 'manager' in db 'admin'
+mongo admin --port 27017 -u manager -p
+# for logging in as user 'arco' in db 'jugad'
+mongo jugad --port 27017 -u arco -p
 
-# replace mongo with mongodb as per OS preference
+# to push data to mongo from previous dumps
+# mongorestore -h 127.0.0.1 -d <db name> --dir <data dir containing bson and json>
+
+# to dump existing collection from mongodb
+# ensure that noauth:True in mongod.conf else this will fail
+# mongodump -h 127.0.0.1 -d jugad -c users
+
+# to convert bson to json
+# bsondump users.bson  > users.json
+
