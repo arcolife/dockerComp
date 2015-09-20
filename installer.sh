@@ -66,11 +66,10 @@ except: print 1")
 }
 
 check_git(){
-    git_op=`git --version`
-    if [[ $git_op != *"command not found"* ]]
-    then
-    GIT_INSTALLED=1 # git is installed
-    echo "Git is already installed"
+    GIT_CMD=$(which git)
+    if [[ ! -z $GIT_CMD ]]; then
+        GIT_INSTALLED=1 # git is installed
+        echo "Git is already installed"
     fi
 }
 
@@ -87,14 +86,10 @@ setup_deps(){
         && [ $PIP_INSTALLED -eq 1 ] && [ $FLASK_INSTALLED -eq 1 ]; 
         then
         echo "All dependencies are statisfied."
-        if [[ -z $(cat /etc/group | grep docker | grep $USER) ]]; then
-            echo 'need sudo to add "$USER" to "docker" group.'
-            sudo usermod -a -G docker $USER
-        fi
         return
     else
         echo "Need to install dependencies which are currently not installed on your system"
-        echo 'Please enter password for "$USER"..'
+        echo "Please enter password for "$USER".."
     fi
 
     YUM_CMD=$(which yum)
@@ -129,23 +124,21 @@ setup_deps(){
 
 
     if [ $DOCKER_INSTALLED -eq 0 ]; then # install docker
-    if [ $opt -eq 1 ]; then # deb based
-        docker_install=$command" docker.io"
-        eval $docker_install
-        sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
-        sudo sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
-        source /etc/bash_completion.d/docker.io
-    fi
+        if [[ ! -z $APT_GET_CMD ]]; then # deb based
+            docker_install=$command" docker.io"
+            eval $docker_install
+            sudo ln -sf /usr/bin/docker.io /usr/local/bin/docker
+            sudo sed -i '$acomplete -F _docker docker' /etc/bash_completion.d/docker.io
+            source /etc/bash_completion.d/docker.io
+        fi
 
-    if [ $opt -eq 2 ]; then # rpm based
-        docker_install=$command" docker-io"
-        eval $docker_install
-        sudo systemctl start docker
-        sudo systemctl enable docker
+        if [[ ! -z $YUM_CMD ]]; then # rpm based
+            docker_install=$command" docker-io"
+            eval $docker_install
+            sudo systemctl start docker
+            sudo systemctl enable docker
+        fi
     fi
-    fi
-
-    sudo usermod -a -G docker $USER
 }
 
 
@@ -166,4 +159,14 @@ setup_app(){
 
 setup_env
 setup_deps
-setup_app
+
+if [[ -z $(cat /etc/group | grep docker | grep $USER) ]]; then
+    echo 'need sudo to add $USER to "docker" group.'
+    sudo usermod -a -G docker $USER
+    echo
+    echo "..added user to docker group."
+    echo "..this script will stop executing now, run it again."
+    newgrp docker
+else
+    setup_app
+fi
