@@ -9,3 +9,5 @@ rm *~
 rm */*~
 rm */*/*~
 rm */*/*/*~
+
+rm -rf ~/dockerComp/

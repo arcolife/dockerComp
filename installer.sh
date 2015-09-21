@@ -23,9 +23,10 @@ setup_env(){
     if [ -f configuration ]; then
         source configuration
     else
-	echo "Config file 'configuration' doesn't exist"
-	exit
+        echo "Config file 'configuration' doesn't exist"
+        exit
     fi
+    echo $CONTAINER_COUNT
     if [[ -z $DC_HOST ]]; then
     	echo "export DC_HOST='"$SERVER_HOSTNAME"'" >> $HOME/.bashrc
         echo "export DC_PORT='"$SERVER_PORT"'" >> $HOME/.bashrc

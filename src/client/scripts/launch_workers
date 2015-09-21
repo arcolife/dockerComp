@@ -6,6 +6,7 @@ for i in $(seq 1 $END);
 do
     docker run -it -d arcolife/docker_comp    
 done
+echo $END" containers have been deployed.."
 
 # docker ps > containers_details
 # cd scripts/
@@ -14,8 +15,8 @@ done
 
 export CURRENT_WORKERS=$(docker ps -q | head -n $END)
 
-docker inspect $IDS > container_info.json
+docker inspect $CURRENT_WORKERS > container_info.json
 # docker inspect $(docker ps  | grep arcolife/docker_comp | awk -F' ' '{print $1}') > container_info.json
 
+echo "updating worker details on server.."
 curl -H "Content-type: application/json" -X POST http://$DC_HOST:$DC_PORT/get_details/ -d @container_info.json
-echo $END" containers have been deployed.."
