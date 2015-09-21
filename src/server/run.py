@@ -32,6 +32,16 @@ import subprocess
 from subprocess import call
 # from subprocess import check_out
 
+
+####
+## Keep track of important records
+####
+
+num_machines = 0
+docker_arr = []
+tasks_dict = {}
+
+
 @app.route('/', methods=['GET'])
 def home():
     """
@@ -60,7 +70,8 @@ def home():
 
     except:
         abort(404)
-        
+       
+
 @app.route('/<container_id>/')
 def listener(container_id=None):
     """
@@ -69,15 +80,25 @@ def listener(container_id=None):
     """
     pass
 
-def data_generator():
+
+@app.route('/task/request/<client_IP>/<container_id>/', methods=['GET','POST'])
+def data_generator(client_IP=None, container_id=None):
     """
     generates random datasets.
     """
-    temp = []
-    for i in xrange(10):
-        temp.append((randrange(100),
-                     randrange(100)))
-    return temp
+    if request.method == 'GET':
+        temp = []
+        for i in xrange(randrange(100)):
+            temp.append((randrange(100),
+                         randrange(100)))
+        return jsonify({"dataset" : temp})
+    elif request.method == 'POST':
+        tasks_dict[client_IP] = [container_id, request.data]
+        print tasks_dict
+        return "200"
+    else:
+        abort(404)
+
 
 def integrity_checker(container_id=None, data=None):
     """
@@ -85,6 +106,7 @@ def integrity_checker(container_id=None, data=None):
     """
     current = Client.objects.get(container_id=container_id)
     
+
 @app.route('/connect/<client_IP>/<container_id>/', methods=['GET','POST'])
 def communicator(container_id=None, client_IP=None):
     """
@@ -100,6 +122,7 @@ def communicator(container_id=None, client_IP=None):
 def test():
     print request.host
     return "200" #jsonify({'got response from client': 'OK'})
+
 
 @app.route('/get_details/', methods=['POST'])
 def get_tasks():
@@ -139,12 +162,6 @@ def get_tasks():
     print request.host
     return '\n>>>> Server: container metadata received..\n'
 
-####
-## Keep track of important records
-####
-
-num_machines = 0
-docker_arr = []
 
 @app.route('/dockers/stats', methods=['GET'])
 def docker_stats():
@@ -157,6 +174,7 @@ def docker_stats():
                                x={"num_machines":num_machines,"docker_arr":docker_arr})
     except:
         abort(404)
+
 
 # deamon runs the computing tasks in a round-robin fashion
 @app.route('/assign/all', methods=['POST'])

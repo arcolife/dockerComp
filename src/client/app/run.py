@@ -32,11 +32,14 @@ def test():
 
 @app.route('/tasks/', methods=['POST'])
 def get_tasks():
-    received = ast.literal_eval(request.data)
+    BUSY = 1
+    # received = ast.literal_eval(request.data)
+    received = json.loads(request.data)
     #print received[0]
     result = 0
-    for i in received:
+    for i in received['dataset']:
         result += sum(i)
+    BUSY = 0
     return Response(str(result))
 
 
