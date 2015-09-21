@@ -1,0 +1,8 @@
+#!/bin/bash
+
+CHECK_CONN=$(curl -s --connect-timeout 2 http://$DC_HOST:$DC_PORT/test/server/)
+if [[ CHECK_CONN -eq 200 ]]; then
+	echo "Server is UP.."
+else
+	echo "Server is DOWN!!"
+fi

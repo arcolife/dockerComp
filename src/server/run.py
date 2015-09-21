@@ -96,10 +96,10 @@ def communicator(container_id=None, client_IP=None):
         pass
 
 
-@app.route('/test/server/', methods=['POST'])
+@app.route('/test/server/', methods=['GET'])
 def test():
     print request.host
-    return "\n>>>> Server: Client POST request OK Tested" #jsonify({'got response from client': 'OK'})
+    return "200" #jsonify({'got response from client': 'OK'})
 
 @app.route('/get_details/', methods=['POST'])
 def get_tasks():

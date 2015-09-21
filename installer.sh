@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# # define your server hostname amd ports using environment variables:
-# `DC_HOST` and `DC_PORT`.  Although, if you're testing locally, 
-# the defaults defined below will take care of dev env..
-SERVER_HOSTNAME=$(echo  $HOSTNAME  | awk -F'.' '{print $1}')
-SERVER_PORT="5000"
-
-DIRECTORY=$HOME/dockerComp/
-
-# set the no. of workers to launch on client
-CONTAINER_COUNT=4
-
 # To be used for checking dependencies
 # Consider the deps to be not present
 DOCKER_INSTALLED=0
@@ -31,9 +20,15 @@ trap user_interrupt SIGINT
 trap user_interrupt SIGTSTP
 
 setup_env(){
+    if [ -f configuration ]; then
+        source configuration
+    else
+	echo "Config file 'configuration' doesn't exist"
+	exit
+    fi
     if [[ -z $DC_HOST ]]; then
-    	echo "export DC_HOST='"$SERVER_HOSTNAME"'" >> ~/.bashrc
-        echo "export DC_PORT='"$SERVER_PORT"'" >> ~/.bashrc
+    	echo "export DC_HOST='"$SERVER_HOSTNAME"'" >> $HOME/.bashrc
+        echo "export DC_PORT='"$SERVER_PORT"'" >> $HOME/.bashrc
         # either source it or set it for current session
         export DC_HOST=$SERVER_HOSTNAME
         export DC_PORT=$SERVER_PORT
@@ -143,7 +138,7 @@ setup_deps(){
 
 
 setup_app(){
-    cd ~
+    cd $HOME
     git clone https://github.com/arcolife/dockerComp.git $DIRECTORY
     cd $DIRECTORY
     # remove server side code, useless for normal users
@@ -151,10 +146,28 @@ setup_app(){
     echo src/client/ > .git/info/sparse-checkout
     git checkout master
     cd src/client/
-    ./scripts/launch.sh $CONTAINER_COUNT
-    ./scripts/test.sh
+    
+    echo -e "launching workers.."
+    LAUNCH_RESULT=$(./scripts/launch_workers $CONTAINER_COUNT | grep "No such file or directory")
+    if [[ ! -z LAUNCH_RESULT ]]; then
+	exit
+    fi
+    
+    echo -e "testing connection to server.."
+    LAUNCH_RESULT=$(./scripts/test_server_conn | grep "No such file or directory")
+    if [[ ! -z LAUNCH_RESULT ]]; then
+	exit
+    fi
+
+    # copy the client daemon from here
+    cp ./slave_manager $HOME/
+    
     echo -e "\n..cleaning up and removing "$DIRECTORY
     rm -rf $DIRECTORY
+
+    cd $HOME
+    echo -e "\n starting the client task manager daemon now.."
+    echo $(nohup ./slave_manager &) > $HOME/daemon_id
 }
 
 setup_env

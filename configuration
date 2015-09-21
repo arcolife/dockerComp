@@ -1,0 +1,11 @@
+# # define your server hostname amd ports using environment variables:
+# `DC_HOST` and `DC_PORT`.   Although, if you're testing locally, 
+# the defaults defined below will take care of dev env..
+
+# SERVER_HOSTNAME=$(echo  $HOSTNAME  | awk -F'.' '{print $1}')
+SERVER_HOSTNAME=$(./src/client/scripts/get_ip.py)
+SERVER_PORT="5000"
+
+DIRECTORY=$HOME/dockerComp/
+# set the no. of workers to launch on client
+CONTAINER_COUNT=4

@@ -59,7 +59,7 @@ make a daemon on client side, that keeps track of containers and allots CPU powe
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ ./src/client/test.sh```
+    run ```$ ./src/client/test_server_conn```
 
 - From server side:
   - TBD

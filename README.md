@@ -108,7 +108,7 @@ Note: For server side deployement (i.e., the server that basically is responsibl
 
 - From client side:
   - although the default connection establishment test is included with install scripts;
-    run ```$ src/client/scripts/test.sh``` (make sure env vars `DC_HOST` and `DC_PORT` are set)
+    run ```$ src/client/scripts/test_server_conn``` (make sure env vars `DC_HOST` and `DC_PORT` are set)
 
 - From server side:
   - TBD

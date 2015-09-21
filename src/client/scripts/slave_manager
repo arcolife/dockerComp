@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# increase this to slow down client
+# decrease to speed up
+WAIT_PERIOD=2
+
+user_interrupt(){
+    echo -e "\n\nKeyboard Interrupt detected."
+    echo -e "Stopping Task Manager..."
+    exit
+}
+
+trap user_interrupt SIGINT
+trap user_interrupt SIGTSTP
+
+TASK_REQUESTED=0
+CLIENT_IP=`./get_ip.py`
+# CURRENT_WORKERS is set in ./launch_workers when workers are launched
+array=($CURRENT_WORKERS)
+
+start_daemon(){
+	while :; do
+		for worker in "${array[@]}"
+		do
+			worker_ip=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $worker)
+			WORKER_STATUS=$(curl http://$worker_ip/status/)
+			# if 0, worker is ready for new task
+		    if [[ $WORKER_STATUS -eq 0 ]]; then
+				# worker waitin' on server
+				ALIVE_TEST=$(curl -s http://$DC_HOST:$DC_PORT/test/server/)
+				if [[ ALIVE_TEST -eq 200 ]]; then
+					PACKET=$(curl http://$DC_HOST:$DC_PORT/task/request/$CLIENT_IP/$WORKER_ID)
+					# TODO: add mechanism to divide this packet in chunks and distribute accordingly
+
+					# if something received
+					if [[ ! -z PACKET ]]; then
+						# post packet to worker
+						result=$(curl -H "Content-type: application/json" -X POST http://$worker_ip/tasks/ $PACKET)
+						# set task status var back to 0
+						TASK_REQUESTED=0
+					fi
+				else
+					sleep $WAIT_PERIOD
+				fi
+			else
+				sleep $WAIT_PERIOD
+			fi
+		done
+	done
+}
+
+start_daemon

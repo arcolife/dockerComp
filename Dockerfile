@@ -26,7 +26,7 @@ RUN mkdir -p /opt/dockerComp/app/ /opt/dockerComp/conf/ /var/dockerComp/
 ADD ./src/client/app /opt/dockerComp/app/
 ADD ./src/client/conf /opt/dockerComp/conf/
 ADD ./src/client/scripts /opt/dockerComp/scripts/
-COPY ./src/client/scripts/test.sh /opt/dockerComp/
+COPY ./src/client/scripts/test_server_conn /opt/dockerComp/
 
 # configure services
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
