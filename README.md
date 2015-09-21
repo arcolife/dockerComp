@@ -1,32 +1,10 @@
 dockerComp
 ==========
 
-- Youtube Video Explaining this project:
-  
-  [![Here's a video for DockerComp](http://img.youtube.com/vi/lIp2nrOnKFs/0.jpg)](http://www.youtube.com/watch?v=lIp2nrOnKFs)
-
-- [Click here](http://asciinema.org/a/13557) for Screencast for running just one script on client side. 
-
-
-**NOTES**
-
-- Demo link to be updated soon. 
-
-- In case you're curious how to go about running this from client side:
- 
-  - So once the server is up and running, all one has to do is download and run installer.sh
-
-- Docker Image: ``` $ docker pull arcolife/docker_comp ``` (will be kept updated)
-
-
 **GOAL**
 
 To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
 computing task.
-
-**FAQ**
-
-Refer to Wiki .. [click Here!](https://github.com/arcolife/dockerComp/wiki).
 
 **INTRODUCTION**
 
@@ -41,6 +19,73 @@ far better than the currently achieved milestones through VMs. The VMs have a hu
 overhead of starting up, as compared to Docker containers. Moreover, we don't even need 
 to explain the difference between running more than one VM on a HostOS compared to 
 running multiple docker containers on that same machine! See the point? :)
+
+- Youtube Video Explaining this project:
+  
+  [![Here's a video for DockerComp](http://img.youtube.com/vi/lIp2nrOnKFs/0.jpg)](http://www.youtube.com/watch?v=lIp2nrOnKFs)
+
+  [![Here's a current screenshot of installation and first run](https://arcolife.files.wordpress.com/2015/09/installation-and-first-contact.png)](https://arcolife.wordpress.com/2015/09/21/docker-global-hack-day-mania-dockercomp/)
+  
+  [![Here's a current screenshot of client logs when server goes down: constant polling](https://arcolife.files.wordpress.com/2015/09/communicatio-and-outage.png)](https://arcolife.wordpress.com/2015/09/21/docker-global-hack-day-mania-dockercomp/)
+  
+- [Click here](http://asciinema.org/a/13557) for Screencast for running just one script on client side. 
+
+**INSTALLATION**
+
+- Server side (src/server/):
+
+  - Make sure that your 'src/server/' is up and running, either locally (for test purpose), 
+     or if its deployed elsewhere, then the hostname/IP and Port is provided in the environment 
+     variables as under `$DC_HOST` and `$DC_PORT`.
+
+     (refer next major point on 'Client side' for this script)
+
+  - Do ensure that for running the server, you need to install mongoDB. Refer to following: 
+    [install_mongo guide](https://github.com/arcolife/dockerComp/blob/master/src/server/install_mongo)
+    and then set the env variables `U_DB, U_USER and U_PASS` giving the same values to them as the
+    db name, it's user and password set while setting up mongoDB.
+
+
+  - Ensure that you've installed deps from `dockerComp/src/server/requirements.txt`
+
+  - To run the src/server, open up a terminal, go to dockerComp/src/server/ and run ```$ ./start```
+    This starts the server locally on your machine.
+
+
+- Client side (src/client/):
+
+  - Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
+      to clients), It has to be deployed somewhere and it's IP has to be provided in your `configuration` file. 
+      And then you may distribute the script `installer.sh` alongwith the `configuration` to the clients. 
+
+
+  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/installer.sh) and run 
+
+  ```$ ./installer.sh``` [configure your Server location for this script, as under `$DC_HOST` & `$DC_PORT` ]
+
+  - Once installed, the daemon output would lie in `$HOME/dockerComp/src/client/scripts/nohup.out` and
+    the daemon itself, would like in  `$HOME/dockerComp/src/client/scripts/slave_manager`. To kill the
+    daemon, you need to run `$ kill -9 $(ps -e | grep slave_manager | awk -F' ' '{print $1}')`
+
+Should you need to remove all traces of dockerComp from your machine, just run the script 'cleanup`
+included in the source code of this project root.
+
+Cheers! :)
+
+**NOTES**
+
+- Demo link to be updated soon. 
+
+- In case you're curious how to go about running this from client side:
+ 
+  - So once the server is up and running, all one has to do is download and run installer.sh
+
+- Docker Image: ``` $ docker pull arcolife/docker_comp ``` (will be kept updated)
+
+
+**FAQ**
+
+Refer to Wiki .. [click Here!](https://github.com/arcolife/dockerComp/wiki).
 
 References: 
 
@@ -69,47 +114,6 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
   to handle the rest.
 
 - Benchmark results and compare with existing methodologies. 
-
-**STEPS**
-
-- Server side (src/server/):
-
-  - Make sure that your 'src/server/' is up and running, either locally (for test purpose), 
-     or if its deployed elsewhere, then the hostname/IP and Port is provided in the environment 
-     variables as under `$DC_HOST` and `$DC_PORT`.
-
-     (refer next major point on 'Client side' for this script)
-
-  - Do ensure that for running the server, you need to install mongoDB. Refer to following: 
-    [install_mongo guide](https://github.com/arcolife/dockerComp/blob/master/src/server/install_mongo)
-    and then set the env variables `U_DB, U_USER and U_PASS` giving the same values to them as the
-    db name, it's user and password set while setting up mongoDB.
-
-
-  - Ensure that you've installed deps from `dockerComp/src/server/requirements.txt`
-
-  - To run the src/server, open up a terminal, go to dockerComp/src/server/ and run ```$ ./start```
-    This starts the server locally on your machine.
-
-
-- Client side (src/client/):
-
-  - Download [This Script](https://github.com/arcolife/dockerComp/raw/master/installer.sh) and run 
-
-  ```$ ./installer.sh``` [configure your Server location for this script, as under `$DC_HOST` & `$DC_PORT` ]
-
-  - Once installed, the daemon output would lie in `$HOME/dockerComp/src/client/scripts/nohup.out` and
-    the daemon itself, would like in  `$HOME/dockerComp/src/client/scripts/slave_manager`. To kill the
-    daemon, you need to run `$ kill -9 $(ps -e | grep slave_manager | awk -F' ' '{print $1}')`
-
-Should you need to remove all traces of dockerComp from your machine, just run the script 'cleanup`
-included in the source code of this project root.
-
-Cheers! :)
-
-Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
-      to clients), It has to be deployed somewhere and it's IP has to be provided in your installer.sh. 
-      And then you may distribute the script to the clients. 
 
 **TESTS**
 
