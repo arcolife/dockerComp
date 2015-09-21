@@ -23,18 +23,18 @@ array=($CURRENT_WORKERS)
 
 start_daemon(){
     while :; do
-		for worker in "${array[@]}"
+		for WORKER_ID in "${array[@]}"
 		do
-		    worker_ip=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $worker)
-		    WORKER_STATUS=$(curl http://$worker_ip/status/)
-		    echo "worker: $worker | ip: $worker_ip | status: $WORKER_STATUS"
+		    worker_ip=$(docker inspect -f '{{ .NetworkSettings.IPAddress }}' $WORKER_ID)
+		    WORKER_STATUS=$(curl -s http://$worker_ip/status/)
 		    # if 0, worker is ready for new task
 		    if [[ $WORKER_STATUS -eq 0 ]]; then
 				# worker waitin' on server
+			    # echo "worker: $WORKER_ID | ip: $worker_ip | status: $WORKER_STATUS"
 				ALIVE_TEST=$(curl -s http://$DC_HOST:$DC_PORT/test/server/)
 				if [[ ALIVE_TEST -eq 200 ]]; then
 				    # PACKET=$(curl http://$DC_HOST:$DC_PORT/task/request/$CLIENT_IP/$WORKER_ID/)
-				    curl http://$DC_HOST:$DC_PORT/task/request/$CLIENT_IP/$WORKER_ID/ \
+				    curl -s http://$DC_HOST:$DC_PORT/task/request/$CLIENT_IP/$WORKER_ID/ \
 					    > $DUMP_LOCATION
 				    # TODO: add mechanism to divide this packet in chunks and distribute accordingly
 
@@ -42,17 +42,18 @@ start_daemon(){
 				    # if [[ ! -z $PACKET ]]; then
 				    if [[ -f $DUMP_LOCATION ]]; then
 						# post packet to worker
-						result=$(curl -H "Content-type: application/json" -X POST \
+						result=$(curl -s -H "Content-type: application/json" -X POST \
 							http://$worker_ip/tasks/ -d @$DUMP_LOCATION)
-						ack=$(curl -H "Content-type: application/json" -X POST \
+						ack=$(curl -s -H "Content-type: application/json" -X POST \
 								http://$DC_HOST:$DC_PORT/task/request/$CLIENT_IP/$WORKER_ID/ \
-									-d '{ "result" : "$result" }')
+									-d '{ "result" : "'$result'" }')
 						# set task status var back to 0
-						
+						echo "server ack: $ack"
 						TASK_REQUESTED=0
 				    fi
 				else
 					# server not up, wait for sometime
+					echo "server seems to be Down. Waiting.."
 				    sleep $WAIT_PERIOD
 				fi
 		    fi

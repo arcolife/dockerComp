@@ -21,7 +21,7 @@ def home():
 
 @app.route('/status/', methods=['GET'])
 def worker_status():
-    return BUSY
+    return str(BUSY)
 
 
 @app.route('/test/client/', methods=['POST'])
