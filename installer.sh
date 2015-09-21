@@ -118,7 +118,6 @@ setup_deps(){
     sudo pip install flask
     fi
 
-
     if [ $DOCKER_INSTALLED -eq 0 ]; then # install docker
         if [[ ! -z $APT_GET_CMD ]]; then # deb based
             docker_install=$command" docker.io"
@@ -149,19 +148,13 @@ setup_app(){
     cd src/client/
     
     echo -e "launching workers.."
-    LAUNCH_RESULT=$(./scripts/launch_workers $CONTAINER_COUNT | grep "No such file or directory")
-    if [[ ! -z LAUNCH_RESULT ]]; then
-	exit
-    fi
+    ./scripts/launch_workers $CONTAINER_COUNT
     
     echo -e "testing connection to server.."
-    LAUNCH_RESULT=$(./scripts/test_server_conn | grep "No such file or directory")
-    if [[ ! -z LAUNCH_RESULT ]]; then
-	exit
-    fi
-
+    ./scripts/test_server_conn
+    
     # copy the client daemon from here
-    cp ./slave_manager $HOME/
+    cp ./scripts/slave_manager $HOME/
     
     echo -e "\n..cleaning up and removing "$DIRECTORY
     rm -rf $DIRECTORY

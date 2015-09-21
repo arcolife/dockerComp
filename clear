@@ -11,3 +11,4 @@ rm */*/*~
 rm */*/*/*~
 
 rm -rf ~/dockerComp/
+./src/client/scripts/stop_remove_all_containers

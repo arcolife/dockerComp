@@ -1,4 +1,5 @@
 #!/bin/bash 
 
-docker stop $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+CLEAN_IDS=$(docker ps  | grep arcolife/docker_comp | awk -F' ' '{print $1}')
+docker stop $CLEAN_IDS
+docker rm $CLEAN_IDS
