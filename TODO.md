@@ -10,7 +10,7 @@ FEATURES
 - [ ] Use ansible/likes to test S/W stack setup
 - [ ] add perf counters
 - [ ] setup logging
-- [ ] test integration with tor n/w and intelligent task distribution with independent cluster management.
+- [ ] integration with tor n/w and intelligent task distribution with independent cluster management.
 
 ### SERVER
 
@@ -32,11 +32,11 @@ FEATURES
 ### CLIENT
 
 - [ ] Client side daemon to distribute workload to workers
-	- [ ] decide IP and other env sharing process (container links/aliases)
+	- [x] decide IP and other env sharing process (container links/aliases)
 	- [ ] shutdown / manage resource intelligently 
-	- [ ] Polling the server (if server goes down) and initiate KEEP_ALIVE
+	- [x] Polling the server (if server goes down) and initiate KEEP_ALIVE
 
-- [ ] provide an option (like manifest file) for client to change
+- [x] provide an option (like manifest file) for client to change
 - [ ] configure client daemon to reload on changes to this file
 
 
