@@ -12,7 +12,7 @@ user_interrupt(){
     echo -e "Cleaning Up and terminating..."
     if [ -d $DIRECTORY ]; then
         rm -rf $DIRECTORY
-    fi
+    fi   
     exit
 }
 
@@ -20,6 +20,11 @@ trap user_interrupt SIGINT
 trap user_interrupt SIGTSTP
 
 setup_env(){
+    if [ -d $DIRECTORY ]; then
+	echo "cleaning up traces of last installation.."
+        rm -rf $DIRECTORY
+    fi
+
     if [ -f configuration ]; then
         source configuration
     else
@@ -145,23 +150,22 @@ setup_app(){
     git config core.sparseCheckout true
     echo src/client/ > .git/info/sparse-checkout
     git checkout master
-    cd src/client/
+    cd src/client/scripts/
     
     echo -e "launching workers.."
-    ./scripts/launch_workers $CONTAINER_COUNT
+    ./launch_workers $CONTAINER_COUNT
     
     echo -e "testing connection to server.."
-    ./scripts/test_server_conn
+    ./test_server_conn
     
-    # copy the client daemon from here
-    cp ./scripts/slave_manager $HOME/
-    
-    echo -e "\n..cleaning up and removing "$DIRECTORY
-    rm -rf $DIRECTORY
+    # # copy the client daemon from here
+    # cp ./scripts/slave_manager $HOME/
+    # echo -e "\n..cleaning up and removing "$DIRECTORY
+    # rm -rf $DIRECTORY
+    # cd $HOME
 
-    cd $HOME
     echo -e "\n starting the client task manager daemon now.."
-    echo $(nohup ./slave_manager &) > $HOME/daemon_id
+    nohup ./slave_manager &
 }
 
 setup_env
