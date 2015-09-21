@@ -1,0 +1,9 @@
+#!/bin/sh
+
+kill -9 $(ps -e | grep slave_manager | awk -F' ' '{print $1}')
+
+CLEAN_IDS=$(docker ps -a | grep arcolife/docker_comp | awk -F' ' '{print $1}')
+docker stop $CLEAN_IDS
+docker rm $CLEAN_IDS
+
+rm -rf ~/dockerComp/

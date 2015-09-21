@@ -98,6 +98,13 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
 
   ```$ ./installer.sh``` [configure your Server location for this script, as under `$DC_HOST` & `$DC_PORT` ]
 
+  - Once installed, the daemon output would lie in `$HOME/dockerComp/src/client/scripts/nohup.out` and
+    the daemon itself, would like in  `$HOME/dockerComp/src/client/scripts/slave_manager`. To kill the
+    daemon, you need to run `$ kill -9 $(ps -e | grep slave_manager | awk -F' ' '{print $1}')`
+
+Should you need to remove all traces of dockerComp from your machine, just run the script 'cleanup`
+included in the source code of this project root.
+
 Cheers! :)
 
 Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
