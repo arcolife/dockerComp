@@ -51,11 +51,14 @@ ENHANCEMENTS
 
 - [ ] Task Distribution redundancy 
 - [ ] integrate cernvm
-	- rpm
-	- fs
-	- contextualization
+	- RPM/updates
+	- AFS
+	- ROOT
+	- Contextualization
 	- fuse-FS integration without privileged mode (refer vault volume plugin)
 	- Define tuned config 
+	- C++11 Compiler
+	- Makeflow
 
 - [ ] integrate PyBossa
 	- deploy sample app (face recog?)
