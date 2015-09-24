@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>DockerComp by arcolife</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">DockerComp</h1>
+      <h2 class="project-tagline">Dockerized Distributed Computing</h2>
+      <a href="https://github.com/arcolife/dockerComp" class="btn">View on GitHub</a>
+      <a href="https://github.com/arcolife/dockerComp/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/arcolife/dockerComp/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="dockercomp" class="anchor" href="#dockercomp" aria-hidden="true"><span class="octicon octicon-link"></span></a>dockerComp</h1>
+
+<p><strong>GOAL</strong></p>
+
+<p>To setup a basic prototype for distributed computing in docker. If time permits, add a complex 
+computing task.</p>
+
+<p><strong>INTRODUCTION</strong></p>
+
+<p>For the purpose of Distributed (Scientific) Computing, scientists across the world have been 
+mostly using pre-configured VM images to let the client volunteer in contributing 
+towards micro-processing tasks  that involve processing of raw data received in 
+chunks over the network. </p>
+
+<p>But, since the introduction of Docker, life has changed and so have the performance 
+benchmarks. We propose an system that uses the benefits of Docker to hopefully perform 
+far better than the currently achieved milestones through VMs. The VMs have a huge 
+overhead of starting up, as compared to Docker containers. Moreover, we don't even need 
+to explain the difference between running more than one VM on a HostOS compared to 
+running multiple docker containers on that same machine! See the point? :)</p>
+
+<ul>
+<li>
+<p>Youtube Video Explaining this project:</p>
+
+<p><a href="http://www.youtube.com/watch?v=lIp2nrOnKFs"><img src="http://img.youtube.com/vi/lIp2nrOnKFs/0.jpg" alt="Here's a video for DockerComp"></a></p>
+
+<p><a href="https://arcolife.wordpress.com/2015/09/21/docker-global-hack-day-mania-dockercomp/"><img src="https://arcolife.files.wordpress.com/2015/09/installation-and-first-contact.png" alt="Here's a current screenshot of installation and first run"></a></p>
+
+<p><a href="https://arcolife.wordpress.com/2015/09/21/docker-global-hack-day-mania-dockercomp/"><img src="https://arcolife.files.wordpress.com/2015/09/communicatio-and-outage.png" alt="Here's a current screenshot of client logs when server goes down: constant polling"></a></p>
+</li>
+<li><p><a href="http://asciinema.org/a/13557">Click here</a> for Screencast for running just one script on client side. </p></li>
+</ul>
+
+<p><strong>INSTALLATION</strong></p>
+
+<ul>
+<li>
+<p>Server side (src/server/):</p>
+
+<ul>
+<li>
+<p>Make sure that your 'src/server/' is up and running, either locally (for test purpose), 
+or if its deployed elsewhere, then the hostname/IP and Port is provided in the environment 
+variables as under <code>$DC_HOST</code> and <code>$DC_PORT</code>.</p>
+
+<p>(refer next major point on 'Client side' for this script)</p>
+</li>
+<li><p>Do ensure that for running the server, you need to install mongoDB. Refer to following: 
+<a href="https://github.com/arcolife/dockerComp/blob/master/src/server/install_mongo">install_mongo guide</a>
+and then set the env variables <code>U_DB, U_USER and U_PASS</code> giving the same values to them as the
+db name, it's user and password set while setting up mongoDB.</p></li>
+<li><p>Ensure that you've installed deps from <code>dockerComp/src/server/requirements.txt</code></p></li>
+<li><p>To run the src/server, open up a terminal, go to dockerComp/src/server/ and run <code>$ ./start</code>
+This starts the server locally on your machine.</p></li>
+</ul>
+</li>
+<li>
+<p>Client side (src/client/):</p>
+
+<ul>
+<li><p>Note: For server side deployement (i.e., the server that basically is responsible for distributing data 
+to clients), It has to be deployed somewhere and it's IP has to be provided in your <code>configuration</code> file. 
+And then you may distribute the script <code>installer.sh</code> alongwith the <code>configuration</code> to the clients. </p></li>
+<li><p>Download <a href="https://github.com/arcolife/dockerComp/raw/master/installer.sh">This Script</a> and run </p></li>
+</ul>
+
+<p><code>$ ./installer.sh</code> [configure your Server location for this script, as under <code>$DC_HOST</code> &amp; <code>$DC_PORT</code> ]</p>
+
+<ul>
+<li>Once installed, the daemon output would lie in <code>$HOME/dockerComp/src/client/scripts/nohup.out</code> and
+the daemon itself, would like in  <code>$HOME/dockerComp/src/client/scripts/slave_manager</code>. To kill the
+daemon, you need to run <code>$ kill -9 $(ps -e | grep slave_manager | awk -F' ' '{print $1}')</code>
+</li>
+</ul>
+</li>
+</ul>
+
+<p>Should you need to remove all traces of dockerComp from your machine, just run the script 'cleanup`
+included in the source code of this project root.</p>
+
+<p>Cheers! :)</p>
+
+<p><strong>NOTES</strong></p>
+
+<ul>
+<li><p>Demo link to be updated soon. </p></li>
+<li>
+<p>In case you're curious how to go about running this from client side:</p>
+
+<ul>
+<li>So once the server is up and running, all one has to do is download and run installer.sh</li>
+</ul>
+</li>
+<li><p>Docker Image: <code>$ docker pull arcolife/docker_comp</code> (will be kept updated)</p></li>
+</ul>
+
+<p><strong>FAQ</strong></p>
+
+<p>Refer to Wiki .. <a href="https://github.com/arcolife/dockerComp/wiki">click Here!</a>.</p>
+
+<p>References: </p>
+
+<pre><code> - http://www.rightscale.com/blog/sites/default/files/docker-containers-vms.png 
+ - http://en.wikipedia.org/wiki/Docker_%28software%29#cite_ref-3
+</code></pre>
+
+<p>So, just to give you a context of this whole project, take a look at this project called
+<a href="http://cernvm.cern.ch/portal/">CernVM</a>. This is a really awesome project, developed to
+help collect CERN's LHC data and perform data analysis on a volunteer's computer or even on
+commercial clouds. Just imagine if the whole process of using VM was dockerized!    </p>
+
+<p><strong>FEATURES</strong></p>
+
+<ul>
+<li>Can be used for:
+
+<ul>
+<li>Image Processing</li>
+<li>General Data Analysis</li>
+<li>Scientific Computing</li>
+<li>CrowdSourcing projects.</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>FUTURE GOALS</strong> </p>
+
+<ul>
+<li><p>Make this a pluggable dockerized distributed computing tool, where you just have to include 
+a compution task (say, map-reduce) and make it send data to clients. The app should be able 
+to handle the rest.</p></li>
+<li><p>Benchmark results and compare with existing methodologies. </p></li>
+</ul>
+
+<p><strong>TESTS</strong></p>
+
+<ul>
+<li>
+<p>From client side:</p>
+
+<ul>
+<li>although the default connection establishment test is included with install scripts;
+run <code>$ src/client/scripts/test_server_conn</code> (make sure env vars <code>DC_HOST</code> and <code>DC_PORT</code> are set)</li>
+</ul>
+</li>
+<li>
+<p>From server side:</p>
+
+<ul>
+<li>TBD</li>
+</ul>
+</li>
+<li>
+<p>Workloads:</p>
+
+<ul>
+<li>Currently a simple task. TBD.</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>WORKFLOW</strong></p>
+
+<ol>
+<li>
+<p>Server</p>
+
+<ul>
+<li>
+<p>Dashboard to Manage:</p>
+
+<ul>
+<li>No. of Clients (and # of containers per client)</li>
+<li>Resources allocated to the containers</li>
+</ul>
+</li>
+<li><p>Master app  that manages data sent to each client and checks for integrity.</p></li>
+</ul>
+</li>
+<li>
+<p>Client</p>
+
+<ul>
+<li>Installation of Docker</li>
+<li>Starting Containers</li>
+<li>Installation of Application inside the Container</li>
+<li>Connection Establishment with the Server.</li>
+<li>Scripts for the computation</li>
+<li>Error Reporting</li>
+</ul>
+</li>
+</ol>
+
+<p><strong>REFERENCES</strong></p>
+
+<ol>
+<li><a href="https://github.com/cernvm">https://github.com/cernvm</a></li>
+<li><a href="http://en.wikipedia.org/wiki/List_of_distributed_computing_projects">http://en.wikipedia.org/wiki/List_of_distributed_computing_projects</a></li>
+<li>
+<a href="http://www.rightscale.com/blog/sites/default/files/docker-containers-vms.png">http://www.rightscale.com/blog/sites/default/files/docker-containers-vms.png</a> </li>
+<li><a href="http://www.psc.edu/science/">http://www.psc.edu/science/</a></li>
+<li><a href="http://pybossa.com/">http://pybossa.com/</a></li>
+<li><a href="https://okfn.org/press/releases/crowdcrafting-putting-citizens-control-citizen-science/">https://okfn.org/press/releases/crowdcrafting-putting-citizens-control-citizen-science/</a></li>
+<li><a href="http://www.mediaagility.com/2014/docker-the-next-big-thing-on-cloud/">http://www.mediaagility.com/2014/docker-the-next-big-thing-on-cloud/</a></li>
+<li><a href="http://cernvm.cern.ch/portal/">http://cernvm.cern.ch/portal/</a></li>
+</ol>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/arcolife/dockerComp">DockerComp</a> is maintained by <a href="https://github.com/arcolife">arcolife</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
