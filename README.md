@@ -158,3 +158,7 @@ commercial clouds. Just imagine if the whole process of using VM was dockerized!
 6. https://okfn.org/press/releases/crowdcrafting-putting-citizens-control-citizen-science/
 7. http://www.mediaagility.com/2014/docker-the-next-big-thing-on-cloud/
 8. http://cernvm.cern.ch/portal/
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/arcolife/dockercomp/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
